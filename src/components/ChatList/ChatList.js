@@ -1,20 +1,12 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
-import { ViewBoardsIcon } from '@heroicons/react/solid';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { RECENT_CHATS } from '../../Mock';
 import ChatUser from '../ChatUser/ChatUser';
-import ProfileMenu from '../ProfileMenu/ProfileMenu';
-import Loader from 'react-loader-spinner';
-import {
-	selectActiveUser,
-	selectchats,
-} from '../../features/chats/chat.selector';
+import { selectActiveUser, selectchats } from '../../features/chats/chat.selector';
 import { chatActions } from '../../features/chats/chat.slice';
-import {
-	selectAccessToken,
-	selectUser,
-} from '../../features/user/user.selector';
+import { selectAccessToken, selectUser } from '../../features/user/user.selector';
+import { FaPlus } from 'react-icons/fa';
 
 const ChatList = () => {
 	const chats = useSelector(selectchats);
@@ -26,6 +18,7 @@ const ChatList = () => {
 	const setAsActiveUser = (email) => {
 		dispatch(chatActions.setActiveUser(email));
 	};
+	const screenWidth = window.innerWidth;
 
 	useEffect(() => {
 		// setTimeout(() => {
@@ -34,15 +27,9 @@ const ChatList = () => {
 	}, []);
 
 	return (
-		<div className='shadow-xl bg-gray-800 bg-opacity-50 h-full flex flex-col relative'>
-			<div className='absolute w-6 -right-6 h-full flex items-center justify-end select-none'>
-				<div className='bg-gray-800 flex items-center justify-center shadow-md trapezoid text-gray-500 z-50 h-16 w-6 cursor-grab'>
-					<ViewBoardsIcon className='w-4' />
-				</div>
-			</div>
-			<ProfileMenu />
-			<div className='overflow-x-hidden overflow-y-scroll h-full scrollbar-fit'>
-				{chats?.length ? (
+		<>
+			<div className='overflow-x-hidden overflow-y-scroll scrollbar-fit bg-gray-800 bg-opacity-50 rounded'>
+				{chats?.length ?
 					<ul>
 						{chats.map((chat, index) => (
 							<ChatUser
@@ -53,20 +40,12 @@ const ChatList = () => {
 							/>
 						))}
 					</ul>
-				) : (
-					<div className='h-full w-full text-cyan-500 flex items-center justify-center'>
-						{/* {loading ? (
-              <Loader type='Bars' color='currentColor' width='42' />
-            ) : (
-              <div className='uppercase tracking-wide text-lg font-sans font-semibold'>
-                No Chats Found!
-              </div>
-            )} */}
-					</div>
-				)}
-				)
+					:
+					<div className='h-full w-full text-cyan-500 flex items-center justify-center'></div>
+				}
 			</div>
-		</div>
+			<h3 className='absolute bottom-10 text-xl p-4 rounded-full bg-cyan-500 cursor-pointer shadow-md' style={{ left: (screenWidth / 4), color: 'white' }}><FaPlus /></h3>
+		</>
 	);
 };
 

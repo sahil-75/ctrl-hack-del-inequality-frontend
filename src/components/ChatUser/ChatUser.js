@@ -13,11 +13,10 @@ const ChatUser = ({
 }) => {
 	return (
 		<li
-			className={`w-full flex py-4 px-2 cursor-pointer group items-start justify-start outline-none ${
-				isActive
+			className={`w-full flex py-4 px-5 cursor-pointer group items-start justify-start outline-none ${isActive
 					? 'bg-cyan-600 shadow-md'
 					: 'hover:bg-gray-900 focus:bg-gray-900'
-			}`}
+				}`}
 			onClick={() => setAsActiveUser(email)}
 			onKeyUp={({ key }) => key === 'Enter' && setAsActiveUser(email)}
 			tabIndex={0}
@@ -31,20 +30,18 @@ const ChatUser = ({
 			</div>
 			<div className='pl-6 w-10/12'>
 				<div
-					className={`text-base font-sans w-full text-left font-medium ${
-						isActive
+					className={`text-base font-sans w-full text-left font-medium ${isActive
 							? 'text-gray-50'
 							: 'text-gray-400 group-hover:text-gray-50'
-					}`}
+						}`}
 				>
 					{name}
 				</div>
 				<div
-					className={`text-base font-sans w-full text-left truncate ${
-						isActive
+					className={`text-base font-sans w-full text-left truncate ${isActive
 							? 'text-gray-200'
 							: 'text-gray-500 group-hover:text-gray-100'
-					}`}
+						}`}
 				>
 					{lastMessage}
 				</div>

@@ -1,8 +1,8 @@
 export const selectchats = (state) =>
-  Object.values(state.chatCollection.items);
+  Object.values(state.chat.items);
 
 export const selectUserMessage = (email) => (state) =>
-  state.chatCollection.items[email];
+  state.chat.items[email];
 
 export const selectActiveUser = (state) =>
-  state.chatCollection.activeUserEmail;
+  state.chat.activeUserEmail;
