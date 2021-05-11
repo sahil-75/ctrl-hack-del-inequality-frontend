@@ -69,29 +69,27 @@ const SignUp = (props) => {
                     title='Voice Logo'
                     className='w-20 mx-auto mb-1'
                 />
-                <h3 className='text-2xl text-gray-200 mb-8 text-center'>
-                    Employee Registration Dashboard
-				</h3>
-                <form onSubmit={submitHandler} className='px-5 mb-7'>
+                <h3 className='text-2xl text-gray-200 mb-6 text-center'>Employee Registration Dashboard</h3>
+                <form onSubmit={submitHandler} className='px-5 mb-4'>
                     <div>
-                        <label htmlFor='name' className='text-gray-200 text-base font-semibold' >Full Name</label>
+                        <label htmlFor='name' className='text-gray-200 text-base font-semibold'>Full Name</label>
                         <input id='name' type='text' className='input-primary' onChange={setName} />
                     </div>
-                    <div className='my-4'>
-                        <label htmlFor='email' className='text-gray-200 text-base font-semibold' >Email</label>
+                    <div className='mt-3'>
+                        <label htmlFor='email' className='text-gray-200 text-base font-semibold'>Email</label>
                         <input id='email' type='email' className='input-primary' onChange={setEmail} />
                     </div>
-                    <div>
-                        <label htmlFor='password' className='text-gray-200 text-base font-semibold' >Password</label>
+                    <div className='mt-3'>
+                        <label htmlFor='password' className='text-gray-200 text-base font-semibold'>Password</label>
                         <input id='password' type='password' className='input-primary' onChange={setPassword} />
                     </div>
-                    <div>
-                        <label htmlFor='orgID' className='text-gray-200 text-base font-semibold' >Organization ID</label>
-                        <input id='orgID' type='orgID' className='input-primary' onChange={setOrgID} />
+                    <div className='mt-3'>
+                        <label htmlFor='orgID' className='text-gray-200 text-base font-semibold'>Organization ID</label>
+                        <input id='orgID' type='text' className='input-primary' onChange={setOrgID} />
                     </div>
 
                     <button type='submit' disabled={loading}
-                        className={`btn-primary flex items-center justify-center w-full font-semibold uppercase tracking-wider ${loading
+                        className={`mt-6 btn-primary flex items-center justify-center w-full font-semibold uppercase tracking-wider ${loading
                             ? 'cursor-wait hover:bg-current bg-opacity-50'
                             : ''
                             }`}

@@ -61,15 +61,15 @@ const Chat = (props) => {
 	}
 
 	return (
-		<div className='bg-primary overflow-hidden p-3 lg:flex flex-row'>
-			<div className='flex-none h-full pr-1.5'>
+		<div className='bg-primary overflow-x-auto overflow-y-hidden p-3 flex flex-row' style={{ minWidth: 950, scrollbarWidth: 'thin' }}>
+			<div className='flex-none h-full pr-1.5' style={{ minWidth: 56 }}>
 				<ProfileMenu />
 			</div>
-			<div className='flex-none w-3/12 h-full flex flex-col px-1.5'>
+			<div className='flex-none w-3/12 h-full flex flex-col px-1.5' style={{ minWidth: 341 }}>
 				<ChatSearch />
 				<ChatList />
 			</div>
-			<div className='flex-1 w-8/12 h-full pl-1.5'>
+			<div className='flex-1 w-8/12 h-full pl-1.5' style={{ minWidth: 520 }}>
 				<ChatRoom />
 			</div>
 		</div >
