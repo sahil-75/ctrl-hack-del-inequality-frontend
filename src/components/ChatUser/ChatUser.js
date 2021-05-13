@@ -6,42 +6,41 @@ import React from 'react';
 const ChatUser = ({
 	name,
 	email,
-	lastMessage,
 	image,
 	isActive,
+	lastMessage,
 	setAsActiveUser,
 }) => {
 	return (
 		<li
-			className={`w-full flex py-4 px-5 cursor-pointer group items-start justify-start outline-none ${isActive
-					? 'bg-cyan-600 shadow-md'
-					: 'hover:bg-gray-900 focus:bg-gray-900'
-				}`}
+			className={`w-full relative flex py-3 px-4 mb-5 bg-white rounded-lg shadow-xl my-2 cursor-pointer group items-start justify-start outline-none `}
 			onClick={() => setAsActiveUser(email)}
 			onKeyUp={({ key }) => key === 'Enter' && setAsActiveUser(email)}
 			tabIndex={0}
 		>
+			{isActive && (
+				<div
+					className='absolute bg-blue-500 h-6 w-6 rounded-full -right-3 top-5'
+					style={{
+						clipPath: 'polygon(0 0, 50% 0, 50% 100%, 0% 100%)',
+					}}
+				></div>
+			)}
 			<div className='h-auto'>
 				<img
-					src={image}
 					alt={name}
-					className='w-12 rounded-full shadow-lg ring ring-gray-600'
+					src={image}
+					className='w-10 rounded-full shadow-lg'
 				/>
 			</div>
-			<div className='pl-6 w-10/12'>
+			<div className='pl-4 w-10/12'>
 				<div
-					className={`text-base font-sans w-full text-left font-medium ${isActive
-							? 'text-gray-50'
-							: 'text-gray-400 group-hover:text-gray-50'
-						}`}
+					className={`text-base font-sans w-full text-left font-medium text-gray-600`}
 				>
 					{name}
 				</div>
 				<div
-					className={`text-base font-sans w-full text-left truncate ${isActive
-							? 'text-gray-200'
-							: 'text-gray-500 group-hover:text-gray-100'
-						}`}
+					className={`text-sm font-sans w-full text-left truncate text-gray-500`}
 				>
 					{lastMessage}
 				</div>

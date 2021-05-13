@@ -3,9 +3,15 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import { RECENT_CHATS } from '../../Mock';
 import ChatUser from '../ChatUser/ChatUser';
-import { selectActiveUser, selectchats } from '../../features/chats/chat.selector';
+import {
+	selectActiveUser,
+	selectchats,
+} from '../../features/chats/chat.selector';
 import { chatActions } from '../../features/chats/chat.slice';
-import { selectAccessToken, selectUser } from '../../features/user/user.selector';
+import {
+	selectAccessToken,
+	selectUser,
+} from '../../features/user/user.selector';
 import { FaPlus } from 'react-icons/fa';
 
 const ChatList = () => {
@@ -28,9 +34,9 @@ const ChatList = () => {
 
 	return (
 		<>
-			<div className='overflow-x-hidden overflow-y-scroll scrollbar-fit bg-gray-800 bg-opacity-50 rounded'>
-				{chats?.length ?
-					<ul>
+			<div className='overflow-y-auto scrollbar-fit rounded'>
+				{chats?.length ? (
+					<ul className='px-2'>
 						{chats.map((chat, index) => (
 							<ChatUser
 								{...chat}
@@ -40,11 +46,16 @@ const ChatList = () => {
 							/>
 						))}
 					</ul>
-					:
+				) : (
 					<div className='h-full w-full text-cyan-500 flex items-center justify-center'></div>
-				}
+				)}
 			</div>
-			<h3 className='absolute bottom-10 text-xl p-4 rounded-full bg-cyan-500 cursor-pointer shadow-md' style={{ left: (screenWidth / 4), color: 'white' }}><FaPlus /></h3>
+			<h3
+				className='absolute bottom-10 text-xl p-4 rounded-full bg-blue-500 cursor-pointer shadow-md'
+				style={{ left: screenWidth / 4, color: 'white' }}
+			>
+				<FaPlus />
+			</h3>
 		</>
 	);
 };
