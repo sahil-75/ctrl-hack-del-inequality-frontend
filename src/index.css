@@ -23,13 +23,13 @@
 	transform: rotate(90deg);
 }
 
-::-webkit-scrollbar {
+/* ::-webkit-scrollbar {
 	@apply bg-gray-800 w-2;
 }
 
 ::-webkit-scrollbar-thumb {
 	@apply bg-gray-600;
-}
+} */
 
 .trapezoid {
 	clip-path: polygon(100% 25%, 100% 75%, 0 100%, 0 0);
