@@ -36,7 +36,7 @@ const SignIn = (props) => {
 		console.log({ email, password });
 
 		// LOGIN LOGIC
-		fetch('http://localhost:4000/user/login', {
+		fetch('https://ctrl-hack-del-inequality-be.herokuapp.com/user/login', {
 			method: 'POST',
 			body: JSON.stringify({ email, password }),
 			headers: { 'Content-Type': 'application/json' },
@@ -106,11 +106,10 @@ const SignIn = (props) => {
 					<button
 						type='submit'
 						disabled={loading}
-						className={`btn-primary flex items-center justify-center w-full font-semibold uppercase tracking-wider ${
-							loading
+						className={`btn-primary flex items-center justify-center w-full font-semibold uppercase tracking-wider ${loading
 								? 'cursor-wait hover:bg-current bg-opacity-50 '
 								: ''
-						}`}
+							}`}
 					>
 						{loading ? (
 							<span className='mr-3 w-5 h-5'>

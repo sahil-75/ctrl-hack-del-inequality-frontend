@@ -19,7 +19,7 @@ const ChatRoom = () => {
 				<>
 					<div className='h-14 px-5 bg-gray-50 w-full shadow-xl flex items-center justify-between text-gray-500 rounded-md'>
 						<div className='flex flex-row'>
-							<div>
+							<div style={{ paddingTop: 2 }}>
 								<FaUser size={24} />
 							</div>
 							<h1 className='ml-4 text-xl'>{activeUserEmail}</h1>
@@ -45,7 +45,7 @@ const ChatRoom = () => {
 							placeholder='Send a message'
 							className='placeholder-grey shadow-xl flex-grow input-white border-white rounded-md mr-4'
 						/>
-						<button className='bg-blue-500 hover:bg-cyan-700 h-10 w-10  flex items-center justify-center focus:outline-none text-gray-200 rounded-full'>
+						<button className='bg-blue-500 hover:bg-cyan-700 h-10 w-10 flex items-center justify-center focus:outline-none text-gray-200 rounded-full'>
 							<FaPaperPlane />
 						</button>
 					</div>

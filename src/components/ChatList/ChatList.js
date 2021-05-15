@@ -34,7 +34,7 @@ const ChatList = () => {
 
 	return (
 		<>
-			<div className='overflow-y-auto scrollbar-fit rounded'>
+			<div className='overflow-y-auto overflow-x-hidden scrollbar-fit rounded mb-4' style={{}}>
 				{chats?.length ? (
 					<ul className='px-2'>
 						{chats.map((chat, index) => (
@@ -52,7 +52,7 @@ const ChatList = () => {
 			</div>
 			<h3
 				className='absolute bottom-10 text-xl p-4 rounded-full bg-blue-500 cursor-pointer shadow-md'
-				style={{ left: screenWidth / 4, color: 'white' }}
+				style={{ left: screenWidth / 4.1, color: 'white' }}
 			>
 				<FaPlus />
 			</h3>
