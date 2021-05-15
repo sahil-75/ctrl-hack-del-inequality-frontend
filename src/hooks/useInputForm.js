@@ -1,9 +1,9 @@
-import {  useState } from 'react';
+import { useState } from 'react';
 
 const useInputForm = (
-  deafultValue
+  defaultValue
 ) => {
-  const [value, setValue] = useState(deafultValue);
+  const [value, setValue] = useState(defaultValue);
 
   const handleChange = (event) =>
     setValue(event.target.value);

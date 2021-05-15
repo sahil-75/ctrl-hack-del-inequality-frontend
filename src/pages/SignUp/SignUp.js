@@ -10,7 +10,7 @@ const SignUp = (props) => {
 	const [name, setName] = useInputForm('');
 	const [email, setEmail] = useInputForm('');
 	const [password, setPassword] = useInputForm('');
-	const [orgID, setOrgID] = useInputForm('');
+	const [isAdmin, setIsAdmin] = useInputForm('');
 	const dispatch = useDispatch();
 	const loading = false;
 
@@ -36,22 +36,22 @@ const SignUp = (props) => {
 		setName('');
 		setEmail('');
 		setPassword('');
-		setOrgID('');
+		setIsAdmin('');
 	};
 
 	const submitHandler = (event) => {
 		event.preventDefault();
-		//console.log({ email, password });
+		// console.log({ email, name, password, isAdmin });
 
 		// SIGNUP LOGIC
 		fetch('https://ctrl-hack-del-inequality-be.herokuapp.com/user/signup', {
 			method: 'POST',
-			body: JSON.stringify({ email, name, password, orgID }),
+			body: JSON.stringify({ email, name, password, isAdmin }),
 			headers: { 'Content-Type': 'application/json' },
 		})
 			.then((response) => {
 				console.log(response);
-				if (response.statusCode != 400)
+				if (response.statusCode !== 400)
 					alert('User Added Successfully.');
 				clearFormFields();
 			})
@@ -59,16 +59,16 @@ const SignUp = (props) => {
 	};
 
 	return (
-		<div className='bg-primary bg-blue-500 text-gray-500 p-12'>
-			<div className='bg-white w-10/12 sm:w-8/12 md:w-6/12 lg:w-4/12 shadow-xl rounded-md py-7 my-4 overflow-y-auto max-h-full'>
+		<div className='bg-primary bg-blue-500 text-gray-500 px-12 py-3'>
+			<div className='bg-white w-10/12 sm:w-8/12 md:w-6/12 lg:w-4/12 shadow-xl rounded-xl px-1 py-4 overflow-y-hidden max-h-full'>
 				<img
 					src={`${process.env.PUBLIC_URL}/logo512.png`}
 					alt='Voice Logo'
 					title='Voice Logo'
 					className='w-20 mx-auto mb-1'
 				/>
-				<h3 className='text-2xl text-gray-700 mb-6 text-center'>
-					Employee Registration Dashboard
+				<h3 className='text-2xl text-gray-700 mb-6 mx-3 text-center'>
+					Add New Employee
 				</h3>
 				<form onSubmit={submitHandler} className='px-5 mb-4'>
 					<div>
@@ -115,25 +115,31 @@ const SignUp = (props) => {
 					</div>
 					<div className='mt-3'>
 						<label
-							htmlFor='orgID'
+							htmlFor='isAdmin'
 							className='text-gray-700 text-base font-medium'
 						>
-							Organization ID
+							Assign Admin Privileges?
 						</label>
-						<input
-							id='orgID'
-							type='text'
+						<select
+							id='isAdmin'
 							className='input-primary'
-							onChange={setOrgID}
-						/>
+							onChange={setIsAdmin}
+						>
+							<option disabled selected value>-- select an option --</option>
+							<option value={true}>Yes</option>
+							<option value={false}>No</option>
+						</select>
 					</div>
 
 					<button
 						type='submit'
-						disabled={loading}
-						className={`mt-6 btn-primary flex items-center justify-center w-full font-medium uppercase tracking-wider ${loading
-							? 'cursor-wait hover:bg-current bg-opacity-50'
-							: ''
+						disabled={loading || (name == '' || email == '' || password == '' || isAdmin == '')}
+						className={`mt-6 btn-primary flex items-center justify-center w-full font-medium uppercase tracking-wider
+						${loading
+								? 'cursor-wait hover:bg-current bg-opacity-50'
+								: (name == '' || email == '' || password == '' || isAdmin == '')
+									? 'bg-opacity-50'
+									: ''
 							}`}
 					>
 						{loading ? (

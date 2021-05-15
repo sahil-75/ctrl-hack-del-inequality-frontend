@@ -9,7 +9,7 @@ function App() {
 	return (
 		<Router>
 			<SignIn path='signin' />
-			<SignUp path='KeuGuessKorteParbena' />
+			<SignUp path='signup' />
 			<Chat path='/' />
 		</Router>
 	);
