@@ -5,6 +5,7 @@ import useInputForm from '../../hooks/useInputForm';
 import { useDispatch } from 'react-redux';
 import { AppDispatch } from '../../app/store';
 import { userActions } from '../../features/user/user.slice';
+import { FaIcons } from 'react-icons/fa';
 
 const SignIn = (props) => {
 	const [email, setEmail] = useInputForm('');
@@ -38,36 +39,44 @@ const SignIn = (props) => {
 		fetch('http://localhost:4000/user/login', {
 			method: 'POST',
 			body: JSON.stringify({ email, password }),
-			headers: { "Content-Type": "application/json" }
-		}).then(
-			response => response.json()
-		).then(
-			({ details, accessToken }) => {
-				dispatch(userActions.setUser({ name: details.name, email: details.email, accessToken }));
-				navigate('/')
-			}
-		).catch(
-			console.error
-		);
+			headers: { 'Content-Type': 'application/json' },
+		})
+			.then((response) => response.json())
+			.then(({ details, accessToken }) => {
+				dispatch(
+					userActions.setUser({
+						name: details.name,
+						email: details.email,
+						accessToken,
+					}),
+				);
+				navigate('/');
+			})
+			.catch(console.error);
 	};
 
 	return (
-		<div className='bg-primary'>
-			<div className='bg-gray-800 bg-opacity-60 w-10/12 sm:w-8/12 md:w-6/12 lg:w-4/12 shadow-xl rounded-md pt-12 border-t-8 border-cyan-600'>
+		<div
+			className='bg-primary bg-blue-500 text-gray-500 p-12'
+			style={{
+				background: '#f2f2f2',
+			}}
+		>
+			<div className='bg-white w-10/12 sm:w-8/12 md:w-6/12 lg:w-4/12 shadow-xl rounded-xl pt-12 overflow-y-auto max-h-full'>
 				<img
 					src={`${process.env.PUBLIC_URL}/logo512.png`}
 					alt='Voice Logo'
 					title='Voice Logo'
 					className='w-20 mx-auto mb-1'
 				/>
-				<h3 className='text-2xl text-gray-200 mb-8 text-center'>
+				<h3 className='text-2xl text-gray-700 mb-8 text-center'>
 					Sign in to your account
 				</h3>
-				<form onSubmit={submitHandler} className='px-5 mb-14'>
+				<form onSubmit={submitHandler} className='px-6 mb-14'>
 					<div>
 						<label
 							htmlFor='email'
-							className='text-gray-200 text-base font-semibold'
+							className='text-gray-600 text-base font-medium'
 						>
 							Email
 						</label>
@@ -81,7 +90,7 @@ const SignIn = (props) => {
 					<div className='mt-4'>
 						<label
 							htmlFor='password'
-							className='text-gray-200 text-base font-semibold'
+							className='text-gray-600 text-base font-medium'
 						>
 							Password
 						</label>
@@ -97,10 +106,11 @@ const SignIn = (props) => {
 					<button
 						type='submit'
 						disabled={loading}
-						className={`btn-primary flex items-center justify-center w-full font-semibold uppercase tracking-wider ${loading
-							? 'cursor-wait hover:bg-current bg-opacity-50 '
-							: ''
-							}`}
+						className={`btn-primary flex items-center justify-center w-full font-semibold uppercase tracking-wider ${
+							loading
+								? 'cursor-wait hover:bg-current bg-opacity-50 '
+								: ''
+						}`}
 					>
 						{loading ? (
 							<span className='mr-3 w-5 h-5'>

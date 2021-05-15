@@ -7,7 +7,10 @@ import ChatList from '../../components/ChatList/ChatList';
 import ChatRoom from '../../components/ChatRoom/ChatRoom';
 import ChatSearch from '../../components/ChatSearch/ChatSearch';
 
-import { selectAccessToken, selectUser } from '../../features/user/user.selector';
+import {
+	selectAccessToken,
+	selectUser,
+} from '../../features/user/user.selector';
 import { userActions } from '../../features/user/user.slice';
 
 const Chat = (props) => {
@@ -61,18 +64,34 @@ const Chat = (props) => {
 	}
 
 	return (
-		<div className='bg-primary overflow-x-auto overflow-y-hidden p-3 flex flex-row' style={{ minWidth: 950, scrollbarWidth: 'thin' }}>
-			<div className='flex-none h-full pr-1.5' style={{ minWidth: 56 }}>
+		<div
+			className='bg-primary overflow-x-auto overflow-y-hidden px-3 flex flex-row'
+			style={{
+				minWidth: 950,
+				background: '#f2f2f2',
+				scrollbarWidth: 'thin',
+			}}
+		>
+			<div
+				className='flex-none h-full p-4 px-1 pr-3'
+				style={{ minWidth: 56 }}
+			>
 				<ProfileMenu />
 			</div>
-			<div className='flex-none w-3/12 h-full flex flex-col px-1.5' style={{ minWidth: 341 }}>
+			<div
+				className='flex-none w-3/12 h-full flex flex-col px-1.5'
+				style={{ minWidth: 341 }}
+			>
 				<ChatSearch />
 				<ChatList />
 			</div>
-			<div className='flex-1 w-8/12 h-full pl-1.5' style={{ minWidth: 520 }}>
+			<div
+				className='flex-1 w-8/12 h-full pl-1.5'
+				style={{ minWidth: 520 }}
+			>
 				<ChatRoom />
 			</div>
-		</div >
+		</div>
 	);
 };
 

@@ -8,9 +8,9 @@ import { Router } from '@reach/router';
 function App() {
 	return (
 		<Router>
-			<SignIn path="signin" />
-			<SignUp path="KeuGuessKorteParbena" />
-			<Chat path="/" />
+			<SignIn path='signin' />
+			<SignUp path='KeuGuessKorteParbena' />
+			<Chat path='/' />
 		</Router>
 	);
 }
