@@ -1,19 +1,22 @@
+import React, { useEffect, useState } from 'react';
 import { navigate, RouteComponentProps } from '@reach/router';
-import React, { useEffect } from 'react';
 import Loader from 'react-loader-spinner';
 import { useDispatch, useSelector } from 'react-redux';
-import ProfileMenu from '../../components/ProfileMenu/ProfileMenu';
+import SideBar from '../../components/SideBar/SideBar';
 import ChatList from '../../components/ChatList/ChatList';
 import ChatRoom from '../../components/ChatRoom/ChatRoom';
 import ChatSearch from '../../components/ChatSearch/ChatSearch';
+import CountDownModal from '../../components/CountDownModal/CountDownModal';
 
-import {
-	selectAccessToken,
-	selectUser,
-} from '../../features/user/user.selector';
+import { selectAccessToken, selectUser } from '../../features/user/user.selector';
 import { userActions } from '../../features/user/user.slice';
 
+const startBreak = () => {
+	console.log('Break Started');
+};
+
 const Chat = (props) => {
+	const [modalVisible, setModalVisible] = useState('hidden');
 	let { email, accessToken } = useSelector(selectUser);
 
 	if (!accessToken) {
@@ -64,8 +67,7 @@ const Chat = (props) => {
 	}
 
 	return (
-		<div
-			className='bg-primary overflow-x-auto overflow-y-hidden px-3 flex flex-row'
+		<div className='bg-primary overflow-x-auto overflow-y-hidden px-3 flex flex-row'
 			style={{
 				minWidth: 950,
 				background: '#f2f2f2',
@@ -76,7 +78,7 @@ const Chat = (props) => {
 				className='flex-none h-full p-4 px-1 pr-3'
 				style={{ minWidth: 56 }}
 			>
-				<ProfileMenu />
+				<SideBar setModalVisible={setModalVisible.bind()} />
 			</div>
 			<div
 				className='flex-none w-3/12 h-full flex flex-col px-1.5'
@@ -90,6 +92,9 @@ const Chat = (props) => {
 				style={{ minWidth: 520 }}
 			>
 				<ChatRoom />
+			</div>
+			<div style={{ visibility: modalVisible }}>
+				<CountDownModal setModalVisible={setModalVisible.bind()} startBreak={startBreak.bind()} />
 			</div>
 		</div>
 	);
