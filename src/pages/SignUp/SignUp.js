@@ -50,7 +50,7 @@ const SignUp = (props) => {
 			headers: { 'Content-Type': 'application/json' },
 		})
 			.then((response) => {
-				console.log(response);
+				// console.log(response);
 				if (response.statusCode !== 400)
 					alert('User Added Successfully.');
 				clearFormFields();

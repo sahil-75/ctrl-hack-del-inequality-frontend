@@ -43,7 +43,7 @@ const CountDownTimer = (props) => {
     const endTime = startTime + timerDuration;
 
     const remainingTime = endTime - startTime;
-    console.log(getTimeMinutes(startTime), getTimeMinutes(endTime), getTimeMinutes(remainingTime));
+    // console.log(getTimeMinutes(startTime), getTimeMinutes(endTime), getTimeMinutes(remainingTime));
     return (
         <CountdownCircleTimer
             isPlaying
