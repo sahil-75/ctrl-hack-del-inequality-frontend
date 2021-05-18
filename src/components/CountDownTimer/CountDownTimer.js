@@ -8,8 +8,8 @@ const getTimeMinutes = (time) => ((time % hourSeconds) / minuteSeconds) | 0;
 const getTimeSeconds = (time) => (minuteSeconds - (time % 60)) | 0;
 
 const renderTime = (timeMins, timeSecs, sidebar) => {
-    timeMins = timeMins < 10 ? "0".concat(timeMins) : timeMins;
-    timeSecs = timeSecs < 10 ? "0".concat(timeSecs) : timeSecs;
+    timeMins = timeMins < 10 ? `0 ${timeMins}` : timeMins;
+    timeSecs = timeSecs < 10 ? `0 ${timeSecs}` : timeSecs;
 
     timeSecs = (timeMins == "00" && timeSecs == "60") ? "00" : timeSecs;
 
