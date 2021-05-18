@@ -3,15 +3,9 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import { RECENT_CHATS } from '../../Mock';
 import ChatUser from '../ChatUser/ChatUser';
-import {
-	selectActiveUser,
-	selectchats,
-} from '../../features/chats/chat.selector';
+import { selectActiveUser, selectchats } from '../../features/chats/chat.selector';
 import { chatActions } from '../../features/chats/chat.slice';
-import {
-	selectAccessToken,
-	selectUser,
-} from '../../features/user/user.selector';
+import { selectAccessToken, selectUser } from '../../features/user/user.selector';
 import { FaPlus } from 'react-icons/fa';
 
 const ChatList = () => {

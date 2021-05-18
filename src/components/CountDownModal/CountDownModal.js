@@ -16,7 +16,7 @@ const CountDownModal = (props) => {
                     <CountDownTimer strokeWidth={6} sidebar={false} />
                     <button
                         onClick={() => props.startBreak()}
-                        class='py-2 px-5 mt-5 bg-blue-500 hover:bg-cyan-700 focus:outline-none text-white rounded-md'
+                        className='py-2 px-5 mt-5 bg-blue-500 hover:bg-cyan-700 focus:outline-none text-white rounded-md'
                     >
                         Start Break
                     </button>
