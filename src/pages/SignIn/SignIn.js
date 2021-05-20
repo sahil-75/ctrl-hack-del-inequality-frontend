@@ -41,7 +41,11 @@ const SignIn = (props) => {
 			body: JSON.stringify({ email, password }),
 			headers: { 'Content-Type': 'application/json' },
 		})
-			.then((response) => response.json())
+			.then((response) => {
+				if (response.status != 200)
+					alert('Invalid Credentials!')
+				return response.json()
+			})
 			.then(({ details, accessToken }) => {
 				dispatch(
 					userActions.setUser({

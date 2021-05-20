@@ -5,51 +5,57 @@ import useInputForm from '../../hooks/useInputForm';
 import { AppDispatch } from '../../app/store';
 import { userActions } from '../../features/user/user.slice';
 
-import { selectUser } from '../../features/user/user.selector';
+import { selectUser, selectAccessToken } from '../../features/user/user.selector';
 
 const SignUp = (props) => {
 	const [name, setName] = useInputForm('');
-	const [email, setEmail] = useInputForm('');
+	const [alias, setAlias] = useInputForm('');
 	const [password, setPassword] = useInputForm('');
-	const [isAdmin, setIsAdmin] = useInputForm('');
+	const [role, setRole] = useInputForm('select_an_option');
+
+	const [email, setEmail] = useState('');
 	const [emailError, setEmailError] = useState('');
-	const dispatch = useDispatch();
-	const loggedInUser = useSelector(selectUser); //Showing empty currently [Shubhajit please check] 
 
-	let loggedInUser1, loggedInUserDomain;
-	loggedInUser1 = 'sahil.kalyani@var.com';
-	// console.log('Logged in as: ' + loggedInUser1);
+	// const dispatch = useDispatch();
+	const { email: loggedInUser } = useSelector(selectUser);
+	const accessToken = useSelector(selectAccessToken);
 
-	loggedInUserDomain = loggedInUser1.substring(loggedInUser1.indexOf('@') + 1);
-
+	const loggedInUserDomain = loggedInUser.substring(loggedInUser.indexOf('@') + 1);
 	const loading = false;
 
 	const clearFormFields = () => {
 		setName('');
-		setEmail('');
+		setAlias('');
 		setPassword('');
-		setIsAdmin('');
+		setRole('select_an_option');
 	};
+
+	useEffect(() => {
+		if (email && name && password && role != 'select_an_option') {
+			fetch('https://ctrl-hack-del-inequality-be.herokuapp.com/user/signup', {
+				method: 'POST',
+				body: JSON.stringify({ email, name, password, role, accessToken }),
+				headers: { 'Content-Type': 'application/json' },
+			}).then((response) => {
+				if (response.statusCode === 201) {
+					alert('User Added Successfully.');
+				} else {
+					alert('User could not be added');
+				}
+				clearFormFields();
+			}).catch(console.error);
+		}
+	}, [email, name, password, role, clearFormFields]);
 
 	const submitHandler = (event) => {
 		event.preventDefault();
 
-		if (email.indexOf('@') == -1)
-			setEmailError('');
-		else
+		if (alias.indexOf('@') != -1)
 			setEmailError('Only enter the alias. Do not enter the full email id');
-
-		// SIGNUP LOGIC
-		fetch('https://ctrl-hack-del-inequality-be.herokuapp.com/user/signup', {
-			method: 'POST',
-			body: JSON.stringify({ email, name, password, isAdmin }),
-			headers: { 'Content-Type': 'application/json' },
-		}).then((response) => {
-			// console.log(response);
-			if (response.statusCode !== 400)
-				alert('User Added Successfully.');
-			clearFormFields();
-		}).catch(console.error);
+		else {
+			setEmailError('');
+			setEmail(`${alias}@${loggedInUserDomain}`);
+		}
 	};
 
 	return (
@@ -69,22 +75,24 @@ const SignUp = (props) => {
 							id='name'
 							type='text'
 							className='input-primary'
+							value={name}
 							onChange={setName}
 						/>
 					</div>
 					<div className='mt-3'>
-						<label htmlFor='email' className='text-gray-700 text-base font-medium'>Email Id</label>
+						<label htmlFor='alias' className='text-gray-700 text-base font-medium'>Email Id</label>
 						<div className='flex'>
 							<input
-								id='email'
+								id='alias'
 								type='text'
 								className='input-primary flex-grow rounded-r-none'
-								onChange={setEmail}
+								value={alias}
+								onChange={setAlias}
 							/>
 							<h3 className='input-primary flex-none rounded-l-none px-5 py-2 select-none' style={{ backgroundColor: '#e6e6e6', width: 'fit-content' }} >{`@${loggedInUserDomain}`}</h3>
 						</div>
 						{emailError != '' &&
-							<label htmlFor='email' className='text-sm ml-2 mb-2' style={{ color: '#af0000' }}>{emailError}</label>
+							<label htmlFor='alias' className='text-sm ml-2 mb-2' style={{ color: '#af0000' }}>{emailError}</label>
 						}
 					</div>
 					<div className='mt-3'>
@@ -93,25 +101,26 @@ const SignUp = (props) => {
 							id='password'
 							type='password'
 							className='input-primary'
+							value={password}
 							onChange={setPassword}
 						/>
 					</div>
 					<div className='mt-3'>
-						<label htmlFor='isAdmin' className='text-gray-700 text-base font-medium'>Assign Admin Privileges?</label>
-						<select id='isAdmin' className='input-primary' onChange={setIsAdmin} defaultValue='select_an_option'>
+						<label htmlFor='role' className='text-gray-700 text-base font-medium'>Assign Admin Privileges?</label>
+						<select id='role' className='input-primary' value={role} onChange={setRole}>
 							<option disabled value='select_an_option'>-- select an option --</option>
-							<option value={true}>Yes</option>
-							<option value={false}>No</option>
+							<option value='admin'>Yes</option>
+							<option value='user'>No</option>
 						</select>
 					</div>
 
 					<button
 						type='submit'
-						disabled={loading || (name == '' || email == '' || password == '' || isAdmin == '')}
+						disabled={loading || (name == '' || alias == '' || password == '' || role == 'select_an_option')}
 						className={`mt-6 btn-primary flex items-center justify-center w-full font-medium uppercase tracking-wider
 						${loading
 								? 'cursor-wait hover:bg-current bg-opacity-50'
-								: (name == '' || email == '' || password == '' || isAdmin == '')
+								: (name == '' || alias == '' || password == '' || role == 'select_an_option')
 									? 'bg-opacity-50'
 									: ''
 							}`}
