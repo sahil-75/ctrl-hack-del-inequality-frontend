@@ -11,8 +11,6 @@ import {
 
 const ChatRoom = () => {
 	const activeUserEmail = useSelector(selectActiveUser);
-
-	console.log(activeUserEmail);
 	return (
 		<div className='flex-grow flex-col space-between pt-4 flex h-full rounded'>
 			{activeUserEmail ? (

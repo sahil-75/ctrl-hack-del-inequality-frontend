@@ -1,10 +1,9 @@
-import React, { useEffect } from 'react';
-import { RouteComponentProps, navigate } from '@reach/router';
+import React, { useEffect, useState } from 'react';
+import { navigate } from '@reach/router';
+import { useDispatch, useSelector } from 'react-redux';
 import Loader from 'react-loader-spinner';
 import useInputForm from '../../hooks/useInputForm';
-import { useDispatch } from 'react-redux';
-import { AppDispatch } from '../../app/store';
-import { userActions } from '../../features/user/user.slice';
+import { FaArrowLeft } from 'react-icons/fa';
 
 const SignUp = (props) => {
 	const [name, setName] = useInputForm('');
@@ -13,24 +12,6 @@ const SignUp = (props) => {
 	const [isAdmin, setIsAdmin] = useInputForm('');
 	const dispatch = useDispatch();
 	const loading = false;
-
-	// useEffect(() => {
-	//     if (data) {
-	//         const { name, email, accessToken } = data.login;
-
-	//         localStorage.setItem('accessToken', accessToken);
-
-	//         dispatch(
-	//             userActions.setUser({
-	//                 name,
-	//                 email,
-	//                 accessToken,
-	//             })
-	//         );
-
-	//         navigate('app');
-	//     }
-	// }, [data, dispatch]);
 
 	const clearFormFields = () => {
 		setName('');
@@ -156,6 +137,9 @@ const SignUp = (props) => {
 					</button>
 				</form>
 			</div>
+			<h3 className='absolute top-5 left-5 h-20 cursor-pointer' style={{ color: '#FFF' }} onClick={() => navigate('/')}>
+				<FaArrowLeft size={30} />
+			</h3>
 		</div>
 	);
 };

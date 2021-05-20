@@ -11,11 +11,10 @@ import CountDownModal from '../../components/CountDownModal/CountDownModal';
 import { selectAccessToken, selectUser } from '../../features/user/user.selector';
 import { userActions } from '../../features/user/user.slice';
 
-const startBreak = () => {
-	console.log('Break Started');
-};
 
 const Chat = (props) => {
+	const [key, setKey] = useState(0);
+	const [breakMode, setBreakMode] = useState(false);
 	const [modalVisible, setModalVisible] = useState('hidden');
 	let { email, accessToken } = useSelector(selectUser);
 
@@ -25,35 +24,11 @@ const Chat = (props) => {
 
 	const dispatch = useDispatch();
 
-	useEffect(() => {
-		if (!email || !accessToken) {
-			// verifyUser({
-			//   variables: {
-			//     accessToken,
-			//   },
-			// });
-		}
-	}, []); // eslint-disable-line
-
-	// useEffect(() => {
-	// if (data) {
-	//   const { accessToken, name, email } = data.verifyUser;
-	//   localStorage.setItem('accessToken', accessToken);
-	//   dispatch(
-	//     userActions.setUser({
-	//       name,
-	//       email,
-	//       accessToken,
-	//     })
-	//   );
-	// }
-	// }, [data]); // eslint-disable-line
-
-	// useEffect(() => {
-	//   if (error) {
-	//     navigate('/');
-	//   }
-	// }, [error]);
+	const toggleBreakMode = () => {
+		console.log('Break Started', key);
+		setKey(prevKey => prevKey + 1);
+		setBreakMode(!breakMode);
+	};
 
 	if (!true) {
 		return (
@@ -78,7 +53,7 @@ const Chat = (props) => {
 				className='flex-none h-full p-4 px-1 pr-3'
 				style={{ minWidth: 56 }}
 			>
-				<SideBar setModalVisible={setModalVisible.bind()} />
+				<SideBar setModalVisible={setModalVisible.bind()} key={key} breakMode={breakMode} />
 			</div>
 			<div
 				className='flex-none w-3/12 h-full flex flex-col px-1.5'
@@ -94,7 +69,7 @@ const Chat = (props) => {
 				<ChatRoom />
 			</div>
 			<div style={{ visibility: modalVisible }}>
-				<CountDownModal setModalVisible={setModalVisible.bind()} startBreak={startBreak.bind()} />
+				<CountDownModal setModalVisible={setModalVisible.bind()} key={key} breakMode={breakMode} toggleBreakMode={toggleBreakMode.bind()} />
 			</div>
 		</div>
 	);
