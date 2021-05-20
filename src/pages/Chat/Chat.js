@@ -11,11 +11,11 @@ import CountDownModal from '../../components/CountDownModal/CountDownModal';
 import { selectAccessToken, selectUser } from '../../features/user/user.selector';
 import { userActions } from '../../features/user/user.slice';
 
-const startBreak = () => {
-	console.log('Break Started');
-};
 
 const Chat = (props) => {
+	const [key, setKey] = useState(0);
+	const [breakMode, setBreakMode] = useState(false);
+	const [isBreakOutRoom, setBreakOutRoom] = useState(false);
 	const [modalVisible, setModalVisible] = useState('hidden');
 	let { email, accessToken } = useSelector(selectUser);
 
@@ -25,46 +25,12 @@ const Chat = (props) => {
 
 	const dispatch = useDispatch();
 
-	useEffect(() => {
-		if (!email || !accessToken) {
-			// verifyUser({
-			//   variables: {
-			//     accessToken,
-			//   },
-			// });
-		}
-	}, []); // eslint-disable-line
-
-	// useEffect(() => {
-	// if (data) {
-	//   const { accessToken, name, email } = data.verifyUser;
-	//   localStorage.setItem('accessToken', accessToken);
-	//   dispatch(
-	//     userActions.setUser({
-	//       name,
-	//       email,
-	//       accessToken,
-	//     })
-	//   );
-	// }
-	// }, [data]); // eslint-disable-line
-
-	// useEffect(() => {
-	//   if (error) {
-	//     navigate('/');
-	//   }
-	// }, [error]);
-
-	if (!true) {
-		return (
-			<div className='bg-primary text-cyan-400 flex w-screen h-screen items-center justify-center flex-col border-8 border-cyan-800 border-opacity-50 border-double'>
-				<Loader type='Bars' color='currentColor' width='48' />
-				<div className='text-white text-2xl uppercase tracking-widest'>
-					{accessToken ? 'Verifying User' : 'Loading User Details'}
-				</div>
-			</div>
-		);
-	}
+	const toggleBreakMode = () => {
+		console.log('Break Started', key);
+		setKey(prevKey => prevKey + 1);
+		setBreakMode(!breakMode);
+		setBreakOutRoom(false);
+	};
 
 	return (
 		<div className='bg-primary overflow-x-auto overflow-y-hidden px-3 flex flex-row'
@@ -78,11 +44,17 @@ const Chat = (props) => {
 				className='flex-none h-full p-4 px-1 pr-3'
 				style={{ minWidth: 56 }}
 			>
-				<SideBar setModalVisible={setModalVisible.bind()} />
+				<SideBar
+					key={key}
+					breakMode={breakMode}
+					isBreakOutRoom={isBreakOutRoom}
+					setModalVisible={setModalVisible}
+					setBreakOutRoom={setBreakOutRoom}
+				/>
 			</div>
 			<div
-				className='flex-none w-3/12 h-full flex flex-col px-1.5'
-				style={{ minWidth: 341 }}
+				className='flex-none w-3/12 h-full flex flex-col px-1.5 relative'
+				style={{ minWidth: 350 }}
 			>
 				<ChatSearch />
 				<ChatList />
@@ -94,7 +66,12 @@ const Chat = (props) => {
 				<ChatRoom />
 			</div>
 			<div style={{ visibility: modalVisible }}>
-				<CountDownModal setModalVisible={setModalVisible.bind()} startBreak={startBreak.bind()} />
+				<CountDownModal
+					key={key}
+					breakMode={breakMode}
+					setModalVisible={setModalVisible}
+					toggleBreakMode={toggleBreakMode}
+				/>
 			</div>
 		</div>
 	);

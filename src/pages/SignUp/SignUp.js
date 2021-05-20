@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
+import { navigate } from '@reach/router';
 import { useDispatch, useSelector } from 'react-redux';
 import Loader from 'react-loader-spinner';
 import useInputForm from '../../hooks/useInputForm';
-import { AppDispatch } from '../../app/store';
-import { userActions } from '../../features/user/user.slice';
+import { FaArrowLeft } from 'react-icons/fa';
 
 import { selectUser, selectAccessToken } from '../../features/user/user.selector';
 
@@ -139,6 +139,9 @@ const SignUp = (props) => {
 					</button>
 				</form>
 			</div>
+			<h3 className='absolute top-5 left-5 h-20 cursor-pointer' style={{ color: '#FFF' }} onClick={() => navigate('/')}>
+				<FaArrowLeft size={30} />
+			</h3>
 		</div>
 	);
 };

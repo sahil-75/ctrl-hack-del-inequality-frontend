@@ -8,17 +8,17 @@ const CountDownModal = (props) => {
             <div className='flex flex-col mx-auto rounded-lg bg-gray-50 border border-gray-300 shadow-xl' style={{ width: 300 }}>
                 <div className='flex flex-row justify-between p-6 bg-white border-b border-gray-200 rounded-tl-lg rounded-tr-lg'>
                     <p className='font-semibold text-gray-800'>Break Countdown</p>
-                    <a className='text-xl cursor-pointer' onClick={() => props.setModalVisible('hidden')}>
+                    <h3 className='text-xl cursor-pointer' onClick={() => props.setModalVisible('hidden')}>
                         <FaTimes />
-                    </a>
+                    </h3>
                 </div>
                 <div className='flex flex-col items-center p-5 m-2'>
-                    <CountDownTimer strokeWidth={6} sidebar={false} />
+                    <CountDownTimer strokeWidth={6} sidebar={false} breakMode={props.breakMode} />
                     <button
-                        onClick={() => props.startBreak()}
+                        onClick={() => props.toggleBreakMode()}
                         className='py-2 px-5 mt-5 bg-blue-500 hover:bg-cyan-700 focus:outline-none text-white rounded-md'
                     >
-                        Start Break
+                        {props.breakMode ? `End Break` : `Start Break`}
                     </button>
                 </div>
             </div>
