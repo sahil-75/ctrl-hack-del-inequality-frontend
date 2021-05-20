@@ -14,8 +14,8 @@ const renderTime = (timeMins, timeSecs, sidebar, breakMode) => {
 
     if (sidebar) {
         return (
-            <h3 className='text-xs -mb-7' style={{ color: 'white' }}>
-                {timeMins} : {timeSecs}
+            <h3 className='text-xs -mb-7 font-sans tracking-widest' style={{ color: 'white' }}>
+                {timeMins}:{timeSecs}
             </h3>
         );
     } else {

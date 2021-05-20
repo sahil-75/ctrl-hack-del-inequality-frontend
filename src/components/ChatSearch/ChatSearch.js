@@ -3,7 +3,7 @@ import { FaSearch, FaMicrophone } from 'react-icons/fa';
 
 const ChatSearch = () => {
 	return (
-		<div className='w-full relative px-2 mt-4 mb-2 text-gray-400'>
+		<div className='w-full relative pl-2 mt-4 mb-2 text-gray-400'>
 			<input
 				id='search'
 				className='w-full rounded-md shadow-lg focus:outline-none h-10 mt-0 px-10'

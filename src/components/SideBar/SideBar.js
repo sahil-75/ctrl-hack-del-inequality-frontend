@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux';
 import { navigate } from '@reach/router';
 import { selectUser } from '../../features/user/user.selector';
 import CountDownTimer from '../CountDownTimer/CountDownTimer';
-import { FaInbox, FaPhoneAlt, FaHourglass, FaCalendarAlt, FaUser, FaUserPlus, FaGamepad, FaBriefcase } from 'react-icons/fa';
+import { FaInbox, FaPhoneAlt, FaRegHourglass, FaCalendarAlt, FaUser, FaUserPlus, FaGamepad, FaBriefcase } from 'react-icons/fa';
 
 const SideBar = (props) => {
 	const user = useSelector(selectUser);
@@ -15,8 +15,9 @@ const SideBar = (props) => {
 						{user.image && (
 							<img alt='User' src={user.image} className='w-10' />
 						)}
-						<div className='p-2'>
+						<div className='p-2 relative'>
 							{!user.image && <FaUser size={20} />}
+							<div className='absolute shadow-md rounded-full' style={{ bottom: -2, right: -2, padding: 7, backgroundColor: props.breakMode ? '#d40f0f' : '#4ee600' }}></div>
 						</div>
 					</div>
 				</div>
@@ -25,10 +26,10 @@ const SideBar = (props) => {
 						<h3 className='h-12 flex items-center text-xl my-3 cursor-pointer p-4 bg-white bg-opacity-20 border-r-4 border-white'>
 							<FaInbox />
 						</h3>
-						<h3 className='h-12 flex items-center text-xl my-3 cursor-pointer p-4'>
+						<h3 className='h-12 flex items-center text-xl my-3 cursor-pointer p-4 text-gray-300'>
 							<FaPhoneAlt />
 						</h3>
-						<h3 className='h-12 flex items-center text-xl my-3 cursor-pointer p-4'>
+						<h3 className='h-12 flex items-center text-xl my-3 cursor-pointer p-4 text-gray-300'>
 							<FaCalendarAlt />
 						</h3>
 						{props.isAdmin &&
@@ -42,17 +43,17 @@ const SideBar = (props) => {
 				}
 			</div>
 			<div className='flex-col flex items-center'>
-				<h3 className='h-12 flex items-center text-xl my-6 cursor-pointer p-2' onClick={() => props.setBreakOutRoom('visible')}>
+				<h3 className='h-12 flex items-center text-xl my-6 cursor-pointer p-2' onClick={() => props.setBreakOutRoom(!props.isBreakOutRoom)}>
 					{!props.isBreakOutRoom ?
 						props.breakMode &&
 						<FaGamepad size={28} />
 						:
-						<FaBriefcase size={24} />
+						<FaBriefcase size={24} className='mx-2' />
 					}
 				</h3>
 				<div className='flex-col flex items-center cursor-pointer mb-3' onClick={() => props.setModalVisible('visible')}>
 					<h3 className='h-12 text-xl -mb-14'>
-						<FaHourglass />
+						<FaRegHourglass className='spinning-animation' />
 					</h3>
 					<CountDownTimer strokeWidth={0} sidebar={true} breakMode={props.breakMode} />
 				</div>
@@ -61,4 +62,4 @@ const SideBar = (props) => {
 	);
 };
 
-export default React.memo(SideBar);
+export default SideBar;
