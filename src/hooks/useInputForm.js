@@ -6,7 +6,7 @@ const useInputForm = (
   const [value, setValue] = useState(defaultValue);
 
   const handleChange = (event) =>
-    setValue(event.target.value);
+    setValue(event.target?.value ?? event);
 
   return [value, handleChange];
 };
