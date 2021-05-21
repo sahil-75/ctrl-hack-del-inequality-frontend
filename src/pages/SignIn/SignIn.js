@@ -42,15 +42,13 @@ const SignIn = (props) => {
 			headers: { 'Content-Type': 'application/json' },
 		})
 			.then((response) => {
-				if (response.status != 200)
-					alert('Invalid Credentials!')
-				return response.json()
+				if (response.status !== 200) alert('Invalid Credentials!');
+				return response.json();
 			})
 			.then(({ details, accessToken }) => {
 				dispatch(
 					userActions.setUser({
-						name: details.name,
-						email: details.email,
+						...details,
 						accessToken,
 					}),
 				);
@@ -110,10 +108,11 @@ const SignIn = (props) => {
 					<button
 						type='submit'
 						disabled={loading}
-						className={`btn-primary flex items-center justify-center w-full font-semibold uppercase tracking-wider ${loading
-							? 'cursor-wait hover:bg-current bg-opacity-50 '
-							: ''
-							}`}
+						className={`btn-primary flex items-center justify-center w-full font-semibold uppercase tracking-wider ${
+							loading
+								? 'cursor-wait hover:bg-current bg-opacity-50 '
+								: ''
+						}`}
 					>
 						{loading ? (
 							<span className='mr-3 w-5 h-5'>

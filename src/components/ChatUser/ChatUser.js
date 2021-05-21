@@ -13,7 +13,7 @@ const ChatUser = ({
 }) => {
 	return (
 		<li
-			className={`w-full relative flex py-3 px-4 bg-white rounded-lg shadow-xl my-2 cursor-pointer group items-start justify-start outline-none `}
+			className={`w-full relative flex py-3 px-4 bg-white rounded-lg shadow-xl my-2 mb-3 cursor-pointer group items-start justify-start outline-none `}
 			onClick={() => setAsActiveUser(email)}
 			onKeyUp={({ key }) => key === 'Enter' && setAsActiveUser(email)}
 			tabIndex={0}
