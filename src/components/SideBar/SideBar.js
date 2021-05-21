@@ -43,16 +43,18 @@ const SideBar = (props) => {
 				}
 			</div>
 			<div className='flex-col flex items-center'>
-				<button className='h-12 flex items-center text-xl my-6 cursor-pointer p-2' onClick={() => props.setBreakOutRoom(!props.isBreakOutRoom)}>
-					{!props.isBreakOutRoom ?
-						props.breakMode &&
+				{!props.isBreakOutRoom ?
+					props.breakMode &&
+					<button className='h-12 flex items-center text-xl my-6 cursor-pointer p-2' onClick={() => props.setBreakOutRoom(!props.isBreakOutRoom)}>
 						<FaGamepad size={28} />
-						:
+					</button>
+					:
+					<button className='h-12 flex items-center text-xl my-6 cursor-pointer p-2' onClick={() => props.setBreakOutRoom(!props.isBreakOutRoom)}>
 						<FaBriefcase size={24} className='mx-2' />
-					}
-				</button>
+					</button>
+				}
 				<button className='cursor-pointer mb-3' onClick={() => props.setModalVisible('visible')}>
-					<CountDownTimer strokeWidth={0} sidebar={true} breakMode={props.breakMode} />
+					<CountDownTimer strokeWidth={0} sidebar={true} timerKey={props.timerKey} breakMode={props.breakMode} />
 				</button>
 			</div>
 		</div>

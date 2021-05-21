@@ -43,8 +43,9 @@ const showNotification = () => {
 };
 
 const CountDownTimer = (props) => {
-    console.log(props.breakMode);
-    const timerDuration = props.breakMode ? 300 : 1500;
+    // if (!props.sidebar)
+    //     console.log(props.timerKey);
+    const timerDuration = props.breakMode ? 300 : 60;
     const startTime = Date.now() / 1000;
     const endTime = startTime + timerDuration;
 
@@ -53,7 +54,7 @@ const CountDownTimer = (props) => {
     return (
         <CountdownCircleTimer
             isPlaying
-            key={props.key}
+            key={props.timerKey}
             strokeWidth={props.strokeWidth}
             duration={remainingTime}
             colors={props.sidebar ?
@@ -71,16 +72,19 @@ const CountDownTimer = (props) => {
                     ]
             }
             onComplete={() => {
-                if (Notification.permission === "granted") {
-                    showNotification();
-                } else if (Notification.permission !== "denied") {
-                    Notification.requestPermission().then(permission => {
-                        if (permission === "granted") {
-                            showNotification();
-                        }
-                    });
+                if (!props.sidebar && props.setTimeUp) {
+                    if (Notification.permission === "granted") {
+                        showNotification();
+                    } else if (Notification.permission !== "denied") {
+                        Notification.requestPermission().then(permission => {
+                            if (permission === "granted") {
+                                showNotification();
+                            }
+                        });
+                    }
+                    console.log(props);
+                    props.setTimeUp(true);
                 }
-                // return [true, 1000];
             }}
             size={props.sidebar ? 50 : 200}
         >
