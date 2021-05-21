@@ -21,11 +21,12 @@ const alert = require('../../assets/alert.wav');
 const audio = new Audio(alert.default);
 
 const Chat = () => {
-	const [key, setKey] = useState(0);
+	const [timerKey, setTimerKey] = useState(0);
 	const [searchKey, setSearchKey] = useState('');
 	const [breakMode, setBreakMode] = useState(false);
 	const [isBreakOutRoom, setBreakOutRoom] = useState(false);
 	const [modalVisible, setModalVisible] = useState('hidden');
+	const [isTimeUp, setTimeUp] = useState(false);
 
 	const dispatch = useDispatch();
 
@@ -33,10 +34,11 @@ const Chat = () => {
 	const accessToken = useSelector(selectAccessToken);
 
 	const toggleBreakMode = () => {
-		console.log('Break Started', key);
-		setKey((prevKey) => prevKey + 1);
+		// console.log('Break Started', timerKey);
+		setTimerKey((prevKey) => prevKey + 1);
 		setBreakMode(!breakMode);
 		setBreakOutRoom(false);
+		setTimeUp(false);
 	};
 
 	const connectSocket = () => {
@@ -112,7 +114,7 @@ const Chat = () => {
 					style={{ minWidth: 56 }}
 				>
 					<SideBar
-						key={key}
+						timerKey={timerKey}
 						breakMode={breakMode}
 						isBreakOutRoom={isBreakOutRoom}
 						setModalVisible={setModalVisible}
@@ -138,12 +140,15 @@ const Chat = () => {
 				</div>
 				<div style={{ visibility: modalVisible }}>
 					<CountDownModal
-						key={key}
+						timerKey={timerKey}
 						breakMode={breakMode}
+						isTimeUp={isTimeUp}
+						setTimeUp={setTimeUp}
 						setModalVisible={setModalVisible}
 						toggleBreakMode={toggleBreakMode}
 					/>
 				</div>
+				<ChatRoom />
 			</div>
 		);
 	}
