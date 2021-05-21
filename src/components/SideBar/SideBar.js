@@ -23,19 +23,19 @@ const SideBar = (props) => {
 				</div>
 				{!props.isBreakOutRoom ?
 					<>
-						<h3 className='h-12 flex items-center text-xl my-3 cursor-pointer p-4 bg-white bg-opacity-20 border-r-4 border-white'>
+						<button className='h-12 flex items-center text-xl my-3 cursor-pointer p-4 bg-white bg-opacity-20 border-r-4 border-white'>
 							<FaInbox />
-						</h3>
-						<h3 className='h-12 flex items-center text-xl my-3 cursor-pointer p-4 text-gray-300'>
+						</button>
+						<button className='h-12 flex items-center text-xl my-3 cursor-pointer p-4 text-gray-300'>
 							<FaPhoneAlt />
-						</h3>
-						<h3 className='h-12 flex items-center text-xl my-3 cursor-pointer p-4 text-gray-300'>
+						</button>
+						<button className='h-12 flex items-center text-xl my-3 cursor-pointer p-4 text-gray-300'>
 							<FaCalendarAlt />
-						</h3>
+						</button>
 						{props.isAdmin &&
-							<h3 className='h-12 flex items-center text-xl my-3 cursor-pointer p-4' onClick={() => navigate('/signup')}>
+							<button className='h-12 flex items-center text-xl my-3 cursor-pointer p-4' onClick={() => navigate('/signup')}>
 								<FaUserPlus size={24} />
-							</h3>
+							</button>
 						}
 					</>
 					:
@@ -43,20 +43,19 @@ const SideBar = (props) => {
 				}
 			</div>
 			<div className='flex-col flex items-center'>
-				<h3 className='h-12 flex items-center text-xl my-6 cursor-pointer p-2' onClick={() => props.setBreakOutRoom(!props.isBreakOutRoom)}>
-					{!props.isBreakOutRoom ?
-						props.breakMode &&
+				{!props.isBreakOutRoom ?
+					props.breakMode &&
+					<button className='h-12 flex items-center text-xl my-6 cursor-pointer p-2' onClick={() => props.setBreakOutRoom(!props.isBreakOutRoom)}>
 						<FaGamepad size={28} />
-						:
+					</button>
+					:
+					<button className='h-12 flex items-center text-xl my-6 cursor-pointer p-2' onClick={() => props.setBreakOutRoom(!props.isBreakOutRoom)}>
 						<FaBriefcase size={24} className='mx-2' />
-					}
-				</h3>
-				<div className='flex-col flex items-center cursor-pointer mb-3' onClick={() => props.setModalVisible('visible')}>
-					<h3 className='h-12 text-xl -mb-14'>
-						<FaRegHourglass className='spinning-animation' />
-					</h3>
-					<CountDownTimer strokeWidth={0} sidebar={true} breakMode={props.breakMode} />
-				</div>
+					</button>
+				}
+				<button className='cursor-pointer mb-3' onClick={() => props.setModalVisible('visible')}>
+					<CountDownTimer strokeWidth={0} sidebar={true} timerKey={props.timerKey} breakMode={props.breakMode} />
+				</button>
 			</div>
 		</div>
 	);

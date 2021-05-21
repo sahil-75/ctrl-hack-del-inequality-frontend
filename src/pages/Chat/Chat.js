@@ -13,10 +13,12 @@ import { userActions } from '../../features/user/user.slice';
 
 
 const Chat = (props) => {
-	const [key, setKey] = useState(0);
+	const [timerKey, setTimerKey] = useState(0);
 	const [breakMode, setBreakMode] = useState(false);
 	const [isBreakOutRoom, setBreakOutRoom] = useState(false);
 	const [modalVisible, setModalVisible] = useState('hidden');
+	const [isTimeUp, setTimeUp] = useState(false);
+
 	let { email, accessToken } = useSelector(selectUser);
 
 	if (!accessToken) {
@@ -26,10 +28,11 @@ const Chat = (props) => {
 	const dispatch = useDispatch();
 
 	const toggleBreakMode = () => {
-		console.log('Break Started', key);
-		setKey(prevKey => prevKey + 1);
+		// console.log('Break Started', timerKey);
+		setTimerKey(prevKey => prevKey + 1);
 		setBreakMode(!breakMode);
 		setBreakOutRoom(false);
+		setTimeUp(false);
 	};
 
 	return (
@@ -45,7 +48,7 @@ const Chat = (props) => {
 				style={{ minWidth: 56 }}
 			>
 				<SideBar
-					key={key}
+					timerKey={timerKey}
 					breakMode={breakMode}
 					isBreakOutRoom={isBreakOutRoom}
 					setModalVisible={setModalVisible}
@@ -67,8 +70,10 @@ const Chat = (props) => {
 			</div>
 			<div style={{ visibility: modalVisible }}>
 				<CountDownModal
-					key={key}
+					timerKey={timerKey}
 					breakMode={breakMode}
+					isTimeUp={isTimeUp}
+					setTimeUp={setTimeUp}
 					setModalVisible={setModalVisible}
 					toggleBreakMode={toggleBreakMode}
 				/>

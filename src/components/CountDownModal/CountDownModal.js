@@ -13,13 +13,15 @@ const CountDownModal = (props) => {
                     </h3>
                 </div>
                 <div className='flex flex-col items-center p-5 m-2'>
-                    <CountDownTimer strokeWidth={6} sidebar={false} breakMode={props.breakMode} />
-                    <button
-                        onClick={() => props.toggleBreakMode()}
-                        className='py-2 px-5 mt-5 bg-blue-500 hover:bg-cyan-700 focus:outline-none text-white rounded-md'
-                    >
-                        {props.breakMode ? `End Break` : `Start Break`}
-                    </button>
+                    <CountDownTimer strokeWidth={6} sidebar={false} breakMode={props.breakMode} setTimeUp={props.setTimeUp} />
+                    {props.isTimeUp &&
+                        <button
+                            onClick={() => props.toggleBreakMode()}
+                            className='py-2 px-5 mt-5 bg-blue-500 hover:bg-cyan-700 focus:outline-none text-white rounded-md'
+                        >
+                            {props.breakMode ? `End Break` : `Start Break`}
+                        </button>
+                    }
                 </div>
             </div>
         </div>
