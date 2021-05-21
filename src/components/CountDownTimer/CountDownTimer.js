@@ -1,5 +1,6 @@
 import React from 'react';
 import { CountdownCircleTimer } from 'react-countdown-circle-timer';
+import { FaRegHourglass } from 'react-icons/fa';
 
 const minuteSeconds = 60;
 const hourSeconds = 3600;
@@ -14,9 +15,14 @@ const renderTime = (timeMins, timeSecs, sidebar, breakMode) => {
 
     if (sidebar) {
         return (
-            <h3 className='text-xs -mb-7 font-sans tracking-widest' style={{ color: 'white' }}>
-                {timeMins}:{timeSecs}
-            </h3>
+            <div className='flex-col flex items-center cursor-pointer mb-3'>
+                <h3 className='text-xl text-white mb-2'>
+                    <FaRegHourglass className={`${(timeMins != "00" && timeSecs != "00") ? 'spinning-animation' : ''}`} />
+                </h3>
+                <h3 className='text-xs font-sans tracking-widest' style={{ color: 'white' }}>
+                    {timeMins}:{timeSecs}
+                </h3>
+            </div>
         );
     } else {
         return (
