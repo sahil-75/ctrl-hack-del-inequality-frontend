@@ -35,7 +35,10 @@ const ChatRoom = () => {
 						</div>
 					</div>
 
-					<div className='flex-grow w-full'></div>
+					<div
+						className='flex-grow w-full'
+						style={{ maxHeight: 'calc(100% - 124px)' }}
+					></div>
 
 					<div className='w-full flex justify-center items-end px-3 my-3'>
 						<input
