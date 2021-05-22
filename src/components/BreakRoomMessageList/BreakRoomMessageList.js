@@ -4,13 +4,13 @@ import { selectRoomMessages } from '../../features/rooms/room.selector';
 import BreakRoomMessage from '../BreakRoomMessage/BreakRoomMessage';
 
 const BreakRoomMessageList = () => {
-	const messagesRef: any = useRef(null);
+	const messagesRef = useRef(null);
 
 	const messages = useSelector(selectRoomMessages);
 
 	useLayoutEffect(() => {
 		if (messagesRef.current) {
-			const elem: any = messagesRef.current;
+			const elem = messagesRef.current;
 			elem.scrollTop = elem.scrollHeight;
 		}
 	}, [messages]);
@@ -21,16 +21,14 @@ const BreakRoomMessageList = () => {
 				ref={messagesRef}
 				className='flex overflow-y-auto pb-4 flex-col'
 			>
-				{messages.map(
-					({ text, timestamp, user }: any, index: number) => (
-						<BreakRoomMessage
-							key={index}
-							user={user}
-							text={text}
-							timestamp={timestamp}
-						/>
-					),
-				)}
+				{messages.map(({ text, timestamp, user }, index) => (
+					<BreakRoomMessage
+						key={index}
+						user={user}
+						text={text}
+						timestamp={timestamp}
+					/>
+				))}
 			</div>
 		</div>
 	);

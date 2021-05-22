@@ -3,7 +3,15 @@ import { useSelector } from 'react-redux';
 import { navigate } from '@reach/router';
 import { selectUser } from '../../features/user/user.selector';
 import CountDownTimer from '../CountDownTimer/CountDownTimer';
-import { FaInbox, FaPhoneAlt, FaRegHourglass, FaCalendarAlt, FaUser, FaUserPlus, FaGamepad, FaBriefcase } from 'react-icons/fa';
+import {
+	FaInbox,
+	FaPhoneAlt,
+	FaCalendarAlt,
+	FaUser,
+	FaUserPlus,
+	FaGamepad,
+	FaBriefcase,
+} from 'react-icons/fa';
 
 const SideBar = (props) => {
 	const user = useSelector(selectUser);
@@ -17,44 +25,65 @@ const SideBar = (props) => {
 						)}
 						<div className='p-2 relative'>
 							{!user.image && <FaUser size={20} />}
-							<div className='absolute shadow-md rounded-full' style={{ bottom: -2, right: -2, padding: 7, backgroundColor: props.breakMode ? '#d40f0f' : '#4ee600' }}></div>
+							<div
+								className='absolute shadow-md rounded-full'
+								style={{
+									bottom: -2,
+									right: -2,
+									padding: 7,
+									backgroundColor: props.inBreak
+										? '#d40f0f'
+										: '#4ee600',
+								}}
+							></div>
 						</div>
 					</div>
 				</div>
-				{!props.isBreakOutRoom ?
-					<>
-						<button className='h-12 flex items-center text-xl my-3 cursor-pointer p-4 bg-white bg-opacity-20 border-r-4 border-white'>
-							<FaInbox />
-						</button>
-						<button className='h-12 flex items-center text-xl my-3 cursor-pointer p-4 text-gray-300'>
-							<FaPhoneAlt />
-						</button>
-						<button className='h-12 flex items-center text-xl my-3 cursor-pointer p-4 text-gray-300'>
-							<FaCalendarAlt />
-						</button>
-						{props.isAdmin &&
-							<button className='h-12 flex items-center text-xl my-3 cursor-pointer p-4' onClick={() => navigate('/signup')}>
-								<FaUserPlus size={24} />
-							</button>
-						}
-					</>
-					:
-					null
-				}
+				<button className='h-12 flex items-center text-xl my-3 cursor-pointer p-4 bg-white bg-opacity-20 border-r-4 border-white'>
+					<FaInbox />
+				</button>
+				<button className='h-12 flex items-center text-xl my-3 cursor-pointer p-4 text-gray-300'>
+					<FaPhoneAlt />
+				</button>
+				<button className='h-12 flex items-center text-xl my-3 cursor-pointer p-4 text-gray-300'>
+					<FaCalendarAlt />
+				</button>
+				{props.isAdmin && (
+					<button
+						className='h-12 flex items-center text-xl my-3 cursor-pointer p-4'
+						onClick={() => navigate('/signup')}
+					>
+						<FaUserPlus size={24} />
+					</button>
+				)}
 			</div>
 			<div className='flex-col flex items-center'>
-				{!props.isBreakOutRoom ?
-					props.breakMode &&
-					<button className='h-12 flex items-center text-xl my-6 cursor-pointer p-2' onClick={() => props.setBreakOutRoom(!props.isBreakOutRoom)}>
-						<FaGamepad size={28} />
+				{props.inBreak && (
+					<button
+						className='h-12 flex items-center text-xl my-6 cursor-pointer p-2'
+						onClick={() =>
+							props.setBreakMode &&
+							props.setBreakMode(!props.breakMode)
+						}
+					>
+						{props.breakMode ? (
+							<FaBriefcase size={28} />
+						) : (
+							<FaGamepad size={28} />
+						)}
 					</button>
-					:
-					<button className='h-12 flex items-center text-xl my-6 cursor-pointer p-2' onClick={() => props.setBreakOutRoom(!props.isBreakOutRoom)}>
-						<FaBriefcase size={24} className='mx-2' />
-					</button>
-				}
-				<button className='cursor-pointer mb-3' onClick={() => props.setModalVisible('visible')}>
-					<CountDownTimer strokeWidth={0} sidebar={true} timerKey={props.timerKey} breakMode={props.breakMode} />
+				)}
+				<button
+					className='cursor-pointer mb-3'
+					onClick={() => props.setModalVisible('visible')}
+				>
+					<CountDownTimer
+						strokeWidth={0}
+						sidebar={true}
+						duration={props.duration}
+						timerKey={props.timerKey}
+						breakMode={props.breakMode}
+					/>
 				</button>
 			</div>
 		</div>
