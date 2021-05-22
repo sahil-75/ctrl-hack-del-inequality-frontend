@@ -16,6 +16,7 @@ import {
 	selectAccessToken,
 } from '../../features/user/user.selector';
 import { roomActions } from '../../features/rooms/room.slice';
+import usePomodoro from '../../hooks/usePomodoro';
 
 const alert = require('../../assets/alert.wav');
 const audio = new Audio(alert.default);
@@ -24,7 +25,6 @@ const Chat = () => {
 	const [timerKey, setTimerKey] = useState(0);
 	const [searchKey, setSearchKey] = useState('');
 	const [breakMode, setBreakMode] = useState(false);
-	const [isBreakOutRoom, setBreakOutRoom] = useState(false);
 	const [modalVisible, setModalVisible] = useState('hidden');
 	const [isTimeUp, setTimeUp] = useState(false);
 
@@ -33,11 +33,21 @@ const Chat = () => {
 	const currentUser = useSelector(selectUser);
 	const accessToken = useSelector(selectAccessToken);
 
+	const { inBreak, duration } = usePomodoro({
+		time: {
+			workTime: 300,
+			breakTime: 300,
+			lunchTime: 300,
+			pomodoroTime: 300,
+		},
+	});
+
+	console.log({ inBreak, duration });
+
 	const toggleBreakMode = () => {
-		// console.log('Break Started', timerKey);
-		setTimerKey((prevKey) => prevKey + 1);
+		// console.log('Break Started', timerKey + 1);
+		setTimerKey((prevKey) => prevKey + 2);
 		setBreakMode(!breakMode);
-		setBreakOutRoom(false);
 		setTimeUp(false);
 	};
 
@@ -97,6 +107,16 @@ const Chat = () => {
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [breakMode]);
 
+	useEffect(() => {
+		setTimerKey((prevKey) => prevKey + 2);
+	}, [inBreak, duration]);
+
+	useEffect(() => {
+		if (!inBreak) {
+			setBreakMode(false);
+		}
+	}, [inBreak]);
+
 	if (!accessToken) {
 		return <Redirect to='/signin' noThrow />;
 	} else {
@@ -114,11 +134,12 @@ const Chat = () => {
 					style={{ minWidth: 56 }}
 				>
 					<SideBar
+						inBreak={inBreak}
+						duration={duration}
 						timerKey={timerKey}
 						breakMode={breakMode}
-						isBreakOutRoom={isBreakOutRoom}
+						setBreakMode={setBreakMode}
 						setModalVisible={setModalVisible}
-						setBreakOutRoom={setBreakOutRoom}
 					/>
 				</div>
 				<div
@@ -141,14 +162,14 @@ const Chat = () => {
 				<div style={{ visibility: modalVisible }}>
 					<CountDownModal
 						timerKey={timerKey}
-						breakMode={breakMode}
 						isTimeUp={isTimeUp}
+						duration={duration}
+						breakMode={inBreak}
 						setTimeUp={setTimeUp}
 						setModalVisible={setModalVisible}
 						toggleBreakMode={toggleBreakMode}
 					/>
 				</div>
-				<ChatRoom />
 			</div>
 		);
 	}

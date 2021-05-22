@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux';
 import { selectUser } from '../../features/user/user.selector';
 import Avatar from '../Avatar/Avatar';
 
-const BreakRoomMessage = ({ name, text, timestamp, user }: any) => {
+const BreakRoomMessage = ({ name, text, timestamp, user }) => {
 	const { email } = useSelector(selectUser);
 
 	const isCurrentUser = () => email === user.email;
@@ -13,8 +13,7 @@ const BreakRoomMessage = ({ name, text, timestamp, user }: any) => {
 	const time = () => {
 		const date = new Date(timestamp);
 
-		const normalizeDigit = (digit: number) =>
-			`${digit < 10 ? '0' : ''}${digit}`;
+		const normalizeDigit = (digit) => `${digit < 10 ? '0' : ''}${digit}`;
 
 		return `${normalizeDigit(date.getHours())}:${normalizeDigit(
 			date.getMinutes(),
