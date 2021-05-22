@@ -35,10 +35,10 @@ const Chat = () => {
 
 	const { inBreak, duration } = usePomodoro({
 		time: {
-			workTime: 300,
+			workTime: 1500,
 			breakTime: 300,
-			lunchTime: 300,
-			pomodoroTime: 300,
+			lunchTime: 3600,
+			pomodoroTime: 900,
 		},
 	});
 

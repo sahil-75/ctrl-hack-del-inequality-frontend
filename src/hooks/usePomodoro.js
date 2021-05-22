@@ -103,7 +103,7 @@ const isCurrentInRange = (start, end) => {
 const getPomodoroArray = ({ workTime, breakTime, lunchTime, pomodoroTime }) => {
 	const pomodoroArray = [];
 	let currentDate = set(new Date(), {
-		hours: 13,
+		hours: 0,
 		minutes: 0,
 		seconds: 0,
 	});
