@@ -13,31 +13,31 @@ import {
 	selectAccessToken,
 } from '../../features/user/user.selector';
 import { FaPlus } from 'react-icons/fa';
+import { getUsers } from '../../services/api';
 
 const ChatList = () => {
 	const chats = useSelector(selectchats);
 	const activeUserEmail = useSelector(selectActiveUser);
 	const accessToken = useSelector(selectAccessToken);
-	const { email } = useSelector(selectUser);
+	// const { email } = useSelector(selectUser);
 
 	const dispatch = useDispatch();
 	const setAsActiveUser = (email) => {
 		dispatch(chatActions.setActiveUser(email));
 	};
-	const screenWidth = window.innerWidth;
 
 	useEffect(() => {
+		(async () => {
+			const users = await getUsers(accessToken);
+			dispatch(chatActions.setChats(users));
+		})();
 		// setTimeout(() => {
-		dispatch(chatActions.setChats(RECENT_CHATS));
 		// }, 3000);
 	}, []);
 
 	return (
 		<>
-			<div
-				className='overflow-y-auto overflow-x-hidden scrollbar-fit rounded mb-4'
-				style={{}}
-			>
+			<div className='overflow-y-auto overflow-x-hidden scrollbar-fit rounded mb-4'>
 				{chats?.length ? (
 					<ul className='px-2'>
 						{chats.map((chat, index) => (

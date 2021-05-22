@@ -1,6 +1,9 @@
-import React from 'react';
-import { useSelector } from 'react-redux';
-import { selectActiveUser } from '../../features/chats/chat.selector';
+import React, { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import {
+	selectActiveUser,
+	selectAUser,
+} from '../../features/chats/chat.selector';
 import {
 	FaUser,
 	FaPaperPlane,
@@ -8,9 +11,68 @@ import {
 	FaVideo,
 	FaEllipsisV,
 } from 'react-icons/fa';
+import { sendMessage, getMessages } from '../../services/api';
+import {
+	selectAccessToken,
+	selectUser,
+} from '../../features/user/user.selector';
+import { chatActions } from '../../features/chats/chat.slice';
+import BreakRoomMessageList from '../BreakRoomMessageList/BreakRoomMessageList';
 
 const ChatRoom = () => {
+	const [message, setMessage] = useState('');
+
+	const dispatch = useDispatch();
+	const accessToken = useSelector(selectAccessToken);
 	const activeUserEmail = useSelector(selectActiveUser);
+
+	const currentUser = useSelector(selectUser);
+
+	const { _id, messages = [] } =
+		useSelector(selectAUser(activeUserEmail)) ?? {};
+
+	const { _id: currentUserId } =
+		useSelector(selectAUser(currentUser.email)) ?? {};
+
+	const sendText = async () => {
+		const newMessage = {
+			to: _id,
+			content: message,
+			from: currentUserId,
+			timestamp: new Date().valueOf(),
+		};
+
+		await sendMessage(accessToken, newMessage);
+
+		dispatch(
+			chatActions.addMessageToUser({
+				email: activeUserEmail,
+				message: newMessage,
+			}),
+		);
+
+		setMessage('');
+	};
+
+	useEffect(() => {
+		(async () => {
+			if (activeUserEmail) {
+				const messages = await getMessages(accessToken, _id);
+
+				dispatch(
+					chatActions.addMessagesToUser({
+						email: activeUserEmail,
+						messages,
+					}),
+				);
+			}
+		})();
+		// setTimeout(() => {
+		// }, 3000);
+	}, [activeUserEmail]);
+
+	console.log(messages);
+
 	return (
 		<div className='flex-grow flex-col space-between pt-4 flex h-full rounded'>
 			{activeUserEmail ? (
@@ -38,12 +100,20 @@ const ChatRoom = () => {
 					<div
 						className='flex-grow w-full'
 						style={{ maxHeight: 'calc(100% - 124px)' }}
-					></div>
+					>
+						<BreakRoomMessageList
+							chat={true}
+							chatMessages={messages}
+						/>
+					</div>
 
 					<div className='w-full flex justify-center items-end px-3 my-3'>
 						<input
 							type='text'
+							value={message}
 							placeholder='Send a message'
+							onChange={(e) => setMessage(e.target.value)}
+							onKeyUp={({ key }) => key === 'Enter' && sendText()}
 							className='placeholder-grey shadow-xl flex-grow input-white border-white rounded-md mr-4'
 						/>
 						<button className='bg-blue-500 hover:bg-cyan-700 h-10 w-10 flex items-center justify-center focus:outline-none text-gray-200 rounded-full'>

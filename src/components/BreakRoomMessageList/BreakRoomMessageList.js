@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux';
 import { selectRoomMessages } from '../../features/rooms/room.selector';
 import BreakRoomMessage from '../BreakRoomMessage/BreakRoomMessage';
 
-const BreakRoomMessageList = () => {
+const BreakRoomMessageList = ({ chat = false, chatMessages = [] }) => {
 	const messagesRef = useRef(null);
 
 	const messages = useSelector(selectRoomMessages);
@@ -13,7 +13,7 @@ const BreakRoomMessageList = () => {
 			const elem = messagesRef.current;
 			elem.scrollTop = elem.scrollHeight;
 		}
-	}, [messages]);
+	}, [messages, chatMessages]);
 
 	return (
 		<div className='h-full w-full flex flex-col justify-end py-4'>
@@ -21,14 +21,22 @@ const BreakRoomMessageList = () => {
 				ref={messagesRef}
 				className='flex overflow-y-auto pb-4 flex-col'
 			>
-				{messages.map(({ text, timestamp, user }, index) => (
-					<BreakRoomMessage
-						key={index}
-						user={user}
-						text={text}
-						timestamp={timestamp}
-					/>
-				))}
+				{(chat ? chatMessages : messages).map(
+					(
+						{ text, content, to, from, timestamp, user } = {},
+						index,
+					) => (
+						<BreakRoomMessage
+							chat
+							key={index}
+							to={to}
+							from={from}
+							user={user}
+							timestamp={timestamp}
+							text={chat ? content : text}
+						/>
+					),
+				)}
 			</div>
 		</div>
 	);

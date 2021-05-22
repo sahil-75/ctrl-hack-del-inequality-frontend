@@ -88,7 +88,7 @@ const CountDownTimer = (props) => {
 					: [['#004777', 1]]
 			}
 			onComplete={() => {
-				if (!props.sidebar && props.setTimeUp) {
+				if (!props.sidebar && props.setTimeUp && duration > -1) {
 					if (Notification.permission === 'granted') {
 						showNotification();
 					} else if (Notification.permission !== 'denied') {

@@ -1,12 +1,25 @@
 import cs from 'classnames';
 import { useSelector } from 'react-redux';
+import {
+	selectActiveUser,
+	selectAUserById,
+} from '../../features/chats/chat.selector';
 import { selectUser } from '../../features/user/user.selector';
 import Avatar from '../Avatar/Avatar';
 
-const BreakRoomMessage = ({ name, text, timestamp, user }) => {
+const BreakRoomMessage = ({ chat, text, to, from, timestamp, user = {} }) => {
 	const { email } = useSelector(selectUser);
 
-	const isCurrentUser = () => email === user.email;
+	const toUser = useSelector(selectAUserById(to)) ?? {};
+	const fromUser = useSelector(selectAUserById(from)) ?? {};
+
+	const isCurrentUser = () => {
+		if (chat) {
+			return fromUser.email === email;
+		} else {
+			return email === user.email;
+		}
+	};
 
 	const isBot = () => user.name === 'bot';
 
@@ -35,7 +48,7 @@ const BreakRoomMessage = ({ name, text, timestamp, user }) => {
 				<>
 					{!isCurrentUser() && (
 						<>
-							<Avatar name={user.name} />
+							<Avatar name={chat ? fromUser.name : user.name} />
 							<div style={{ width: '8px' }}></div>
 						</>
 					)}
@@ -58,7 +71,7 @@ const BreakRoomMessage = ({ name, text, timestamp, user }) => {
 					{isCurrentUser() && (
 						<>
 							<div style={{ width: '8px' }}></div>
-							<Avatar name={user.name} />
+							<Avatar name={chat ? fromUser.name : user.name} />
 						</>
 					)}
 				</>
