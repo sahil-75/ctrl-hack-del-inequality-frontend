@@ -13,7 +13,7 @@ export const chatSlice = createSlice({
 			return {
 				...state,
 				items: Object.fromEntries(
-					action.payload.map((chat) => [chat.email, chat]),
+					(action.payload ?? []).map((chat) => [chat.email, chat]),
 				),
 			};
 		},

@@ -102,7 +102,9 @@ const BreakRoom = () => {
 					</div>
 				</>
 			) : (
-				<div className='mx-auto my-auto text-2xl text-blue-500'></div>
+				<div className='mx-auto my-auto text-2xl text-blue-500'>
+					Create/Enter a room to join the conversation
+				</div>
 			)}
 		</div>
 	);

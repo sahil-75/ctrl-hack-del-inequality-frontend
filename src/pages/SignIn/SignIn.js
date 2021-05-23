@@ -1,11 +1,11 @@
-import React, { useEffect } from 'react';
-import { RouteComponentProps, navigate } from '@reach/router';
+import React from 'react';
+import { navigate } from '@reach/router';
 import Loader from 'react-loader-spinner';
-import useInputForm from '../../hooks/useInputForm';
 import { useDispatch } from 'react-redux';
-import { AppDispatch } from '../../app/store';
+
 import { userActions } from '../../features/user/user.slice';
-import { FaIcons } from 'react-icons/fa';
+import useInputForm from '../../hooks/useInputForm';
+import { login } from '../../services/api';
 
 const SignIn = (props) => {
 	const [email, setEmail] = useInputForm('');
@@ -35,11 +35,7 @@ const SignIn = (props) => {
 		event.preventDefault();
 
 		// LOGIN LOGIC
-		fetch('https://ctrl-hack-del-inequality-be.herokuapp.com/user/login', {
-			method: 'POST',
-			body: JSON.stringify({ email, password }),
-			headers: { 'Content-Type': 'application/json' },
-		})
+		login({ email, password })
 			.then((response) => {
 				if (response.status !== 200) alert('Invalid Credentials!');
 				return response.json();

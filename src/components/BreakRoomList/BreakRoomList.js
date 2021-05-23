@@ -23,7 +23,6 @@ const BreakRoomList = ({ search = '' }) => {
 
 	/* eslint-disable no-undef */
 	const enterRoom = (room) => {
-		console.log('joinign room');
 		const { room: roomName } = room;
 
 		if (activeRoom === room) {
@@ -60,7 +59,7 @@ const BreakRoomList = ({ search = '' }) => {
 	return (
 		<>
 			<div
-				className='relative overflow-y-auto overflow-x-hidden scrollbar-fit rounded pb-4'
+				className='overflow-y-auto overflow-x-hidden scrollbar-fit rounded pb-4'
 				style={{ minHeight: 'calc(100% - 64px)' }}
 			>
 				{filteredRooms?.length ? (
@@ -77,12 +76,6 @@ const BreakRoomList = ({ search = '' }) => {
 					<div className='h-full w-full text-blue-500 flex items-center justify-center text-xl pb-6'>
 						<div className='flex flex-col items-center'>
 							<FaExclamationTriangle size={80} />
-							<div className='pt-2 text-base'>No rooms found</div>
-							<div className='pt-1 text-xs'>
-								{rooms?.length > 0
-									? 'Change or remove filter to widen your search'
-									: 'Create/Enter a room to join the conversation'}
-							</div>
 						</div>
 					</div>
 				)}
@@ -115,10 +108,9 @@ const BreakRoomList = ({ search = '' }) => {
 				</div>
 				<button
 					className={cs(
-						'fixed hover:bg-blue-700 bottom-4 h-12 w-12 text-xl rounded-full',
-						'bg-blue-500 cursor-pointer shadow-lg flex items-center justify-center',
+						'absolute hover:bg-blue-700 bottom-10 right-7 h-12 w-12 text-xl rounded-full',
+						'bg-blue-500 cursor-pointer shadow-lg flex items-center justify-center text-white',
 					)}
-					style={{ left: 364, color: 'white' }}
 					onClick={() => setShowForm((state) => !state)}
 				>
 					<FaPlus />

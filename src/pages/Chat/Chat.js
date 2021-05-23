@@ -1,5 +1,5 @@
 import { Redirect } from '@reach/router';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 
 import SideBar from '../../components/SideBar/SideBar';
@@ -29,6 +29,7 @@ const notification = require('../../assets/notify.mp3');
 const notificationAudio = new Audio(notification.default);
 
 const Chat = () => {
+	const prevTimestamp = useRef(undefined);
 	const [socketMessage, setSocketMessage] = useState(null);
 
 	const [timerKey, setTimerKey] = useState(0);
@@ -46,7 +47,7 @@ const Chat = () => {
 
 	const { inBreak, duration } = usePomodoro({
 		time: {
-			workTime: 1500,
+			workTime: 30,
 			breakTime: 300,
 			lunchTime: 3600,
 			pomodoroTime: 900,
@@ -69,12 +70,16 @@ const Chat = () => {
 			Rooms.init({ name, email, id: name });
 
 			Rooms.addListener('message', (message) => {
-				console.log('in message', message);
 				if (message.user.name !== 'bot') {
 					audio.play();
-				}
 
-				dispatch(roomActions.addMesssage(message));
+					if (prevTimestamp.current !== message.timestamp) {
+						dispatch(roomActions.addMesssage(message));
+						prevTimestamp.current = message.timestamp;
+					}
+				} else {
+					dispatch(roomActions.addMesssage(message));
+				}
 			});
 
 			Rooms.addListener('roomData', (roomData) => {

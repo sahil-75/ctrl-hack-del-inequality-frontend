@@ -4,7 +4,7 @@ window.Rooms = (function () {
 	let isInitialized = false;
 
 	// TODO: change this for production
-	const URL = 'https://ctrl-hack-del-inequality-be.herokuapp.com';
+	const URL = 'http://localhost:4000';
 	const defaultOptions = { transports: ['websocket'] };
 	return {
 		/**
