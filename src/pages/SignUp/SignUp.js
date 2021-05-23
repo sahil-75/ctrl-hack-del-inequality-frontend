@@ -21,6 +21,8 @@ const SignUp = (props) => {
 	const [email, setEmail] = useState('');
 	const [emailError, setEmailError] = useState('');
 
+	const [isSubmitted, setIsSubmitted] = useState(false);
+
 	// const dispatch = useDispatch();
 	const { email: loggedInUser } = useSelector(selectUser);
 	const accessToken = useSelector(selectAccessToken);
@@ -35,10 +37,11 @@ const SignUp = (props) => {
 		setAlias('');
 		setPassword('');
 		setRole('select_an_option');
+		setIsSubmitted(false);
 	};
 
 	useEffect(() => {
-		if (email && name && password && role !== 'select_an_option') {
+		if (email && name && password && role !== 'select_an_option' && isSubmitted) {
 			signup({
 				email,
 				name,
@@ -57,18 +60,17 @@ const SignUp = (props) => {
 				.catch(console.error);
 		}
 		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [email, name, password, role, clearFormFields]);
+	}, [email, name, password, role, clearFormFields, isSubmitted]);
 
 	const submitHandler = (event) => {
 		event.preventDefault();
 
 		if (alias.indexOf('@') !== -1)
-			setEmailError(
-				'Only enter the alias. Do not enter the full email id',
-			);
+			setEmailError('Only enter the alias. Do not enter the full email id');
 		else {
 			setEmailError('');
 			setEmail(`${alias}@${loggedInUserDomain}`);
+			setIsSubmitted(true);
 		}
 	};
 
@@ -179,16 +181,15 @@ const SignUp = (props) => {
 							role === 'select_an_option'
 						}
 						className={`mt-6 btn-primary flex items-center justify-center w-full font-medium uppercase tracking-wider
-						${
-							loading
+						${loading
 								? 'cursor-wait hover:bg-current bg-opacity-50'
 								: name === '' ||
-								  alias === '' ||
-								  password === '' ||
-								  role === 'select_an_option'
-								? 'bg-opacity-50'
-								: ''
-						}`}
+									alias === '' ||
+									password === '' ||
+									role === 'select_an_option'
+									? 'bg-opacity-50'
+									: ''
+							}`}
 					>
 						{loading ? (
 							<span className='mr-3 w-5 h-5'>
