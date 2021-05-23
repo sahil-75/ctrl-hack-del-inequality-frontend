@@ -27,9 +27,9 @@ const MessageList = ({ chat = false, chatMessages = [] }) => {
 						index,
 					) => (
 						<Message
-							chat
-							key={index}
 							to={to}
+							chat={chat}
+							key={index}
 							from={from}
 							user={user}
 							timestamp={timestamp}

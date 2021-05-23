@@ -28,7 +28,7 @@ const renderTime = (duration, elapsedTime, sidebar, breakMode) => {
 				<h3 className='text-xl text-white mb-2'>
 					<FaRegHourglass
 						className={`${
-							timeMins != '00' && timeSecs != '00'
+							timeMins !== '00' && timeSecs !== '00'
 								? 'spinning-animation'
 								: ''
 						}`}
@@ -58,23 +58,15 @@ const renderTime = (duration, elapsedTime, sidebar, breakMode) => {
 	}
 };
 
-const showNotification = () => {
-	const notification = new Notification('Break Time!', {
-		body: "Hey there, it's time for you to take a break.",
-	});
-};
-
 const CountDownTimer = (props) => {
-	const { duration } = props;
 	const [localKey, setLocalKey] = useState(0);
+	const { duration, timerKey } = props;
 
-	// const timerDuration = props.breakMode ? 300 : 60;
-	// const startTime = Date.now() / 1000;
-	// const endTime = startTime + timerDuration;
-
-	// const remainingTime = endTime - startTime;
-
-	useEffect(() => setLocalKey((key) => key + 1), [duration]);
+	useEffect(() => {
+		setTimeout(() => {
+			setLocalKey((key) => key + 1 + timerKey);
+		}, 100);
+	}, [duration, timerKey]);
 
 	if (Math.abs(duration ?? 0) > 4000) {
 		return (
@@ -91,7 +83,7 @@ const CountDownTimer = (props) => {
 		return (
 			<CountdownCircleTimer
 				isPlaying
-				key={props.timerKey + localKey}
+				key={localKey}
 				strokeWidth={props.strokeWidth}
 				duration={duration}
 				colors={
@@ -101,23 +93,6 @@ const CountDownTimer = (props) => {
 						? [['#A30000', 1]]
 						: [['#004777', 1]]
 				}
-				onComplete={() => {
-					if (!props.sidebar && props.setTimeUp && duration > -1) {
-						if (Notification.permission === 'granted') {
-							showNotification();
-						} else if (Notification.permission !== 'denied') {
-							Notification.requestPermission().then(
-								(permission) => {
-									if (permission === 'granted') {
-										showNotification();
-									}
-								},
-							);
-						}
-						console.log(props);
-						props.setTimeUp(true);
-					}
-				}}
 				size={props.sidebar ? 50 : 200}
 			>
 				{({ elapsedTime }) =>

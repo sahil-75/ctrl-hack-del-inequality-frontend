@@ -72,16 +72,12 @@ const usePomodoro = (options = {}) => {
 					continue;
 				}
 			}
-			// console.log(new Date());
 		}, 1000);
 
 		return () => {
-			console.log('clearing interval');
 			clearInterval(pomodoroInterval);
 		};
 	}, [pomodoroArray]);
-
-	// console.log(pomodoroArray, pomodoroArray.length);
 
 	return {
 		inBreak,
@@ -103,8 +99,8 @@ const isCurrentInRange = (start, end) => {
 const getPomodoroArray = ({ workTime, breakTime, lunchTime, pomodoroTime }) => {
 	const pomodoroArray = [];
 	let currentDate = set(new Date(), {
-		hours: 10,
-		minutes: 0,
+		hours: 13,
+		minutes: 20,
 		seconds: 0,
 	});
 

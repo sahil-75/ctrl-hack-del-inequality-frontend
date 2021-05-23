@@ -76,7 +76,7 @@ const BreakRoom = () => {
 						className='flex-grow w-full'
 						style={{ maxHeight: 'calc(100% - 124px)' }}
 					>
-						<MessageList />
+						<MessageList chat={false} />
 					</div>
 
 					<div className='w-full flex justify-center items-center my-4'>

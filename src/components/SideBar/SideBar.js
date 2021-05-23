@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { useSelector } from 'react-redux';
+import React from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { navigate } from '@reach/router';
 import { selectUser } from '../../features/user/user.selector';
 import CountDownTimer from '../CountDownTimer/CountDownTimer';
@@ -10,16 +10,19 @@ import {
 	FaUser,
 	FaUserPlus,
 	FaGamepad,
+	FaSignOutAlt,
 	FaBriefcase,
 } from 'react-icons/fa';
+import { userActions } from '../../features/user/user.slice';
 
 const SideBar = (props) => {
-	const user = useSelector(selectUser);
+	const dispatch = useDispatch();
+	const user = useSelector(selectUser) ?? {};
 	return (
 		<div className='py-3 flex-col h-full bg-blue-500 rounded-md flex items-center justify-between shadow-2xl text-gray-50'>
 			<div className='flex-col'>
 				<div className='my-3 px-2 mb-6 flex items-center justify-center'>
-					<div className='rounded-full border-cyan-300 ring-2 ring-white cursor-pointer'>
+					<div className='rounded-full border-cyan-300 ring-2 ring-white'>
 						{user.image && (
 							<img alt='User' src={user.image} className='w-10' />
 						)}
@@ -42,13 +45,27 @@ const SideBar = (props) => {
 				<button className='h-12 flex items-center text-xl my-3 cursor-pointer p-4 bg-white bg-opacity-20 border-r-4 border-white'>
 					<FaInbox />
 				</button>
-				<button className='h-12 flex items-center text-xl my-3 cursor-pointer p-4 text-gray-300'>
+				<button className='h-12 flex items-center text-xl my-3 p-4 text-gray-300'>
 					<FaPhoneAlt />
 				</button>
-				<button className='h-12 flex items-center text-xl my-3 cursor-pointer p-4 text-gray-300'>
+				<button className='h-12 flex items-center text-xl my-3 p-4 text-gray-300'>
 					<FaCalendarAlt />
 				</button>
-				{props.isAdmin && (
+				<button
+					className='h-12 flex items-center text-xl my-3 p-4 cursor-pointer'
+					onClick={() => {
+						const sure = window.confirm(
+							'Are you sure you want to logout?',
+						);
+						if (sure) {
+							dispatch(userActions.setAccessToken(''));
+							navigate('/signin');
+						}
+					}}
+				>
+					<FaSignOutAlt />
+				</button>
+				{user.role === 'admin' && (
 					<button
 						className='h-12 flex items-center text-xl my-3 cursor-pointer p-4'
 						onClick={() => navigate('/signup')}

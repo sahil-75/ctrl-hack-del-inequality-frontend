@@ -33,7 +33,6 @@ const SignIn = (props) => {
 
 	const submitHandler = (event) => {
 		event.preventDefault();
-		// console.log({ email, password });
 
 		// LOGIN LOGIC
 		fetch('https://ctrl-hack-del-inequality-be.herokuapp.com/user/login', {

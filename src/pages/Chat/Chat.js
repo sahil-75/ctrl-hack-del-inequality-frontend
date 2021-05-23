@@ -14,13 +14,19 @@ import {
 	selectUser,
 	selectAccessToken,
 } from '../../features/user/user.selector';
-import { selectActiveUser } from '../../features/chats/chat.selector';
-import { roomActions } from '../../features/rooms/room.slice';
+import {
+	selectchats,
+	selectActiveUser,
+} from '../../features/chats/chat.selector';
 import usePomodoro from '../../hooks/usePomodoro';
+import { roomActions } from '../../features/rooms/room.slice';
 import { chatActions } from '../../features/chats/chat.slice';
 
 const alert = require('../../assets/alert.wav');
 const audio = new Audio(alert.default);
+
+const notification = require('../../assets/notify.mp3');
+const notificationAudio = new Audio(notification.default);
 
 const Chat = () => {
 	const [socketMessage, setSocketMessage] = useState(null);
@@ -33,6 +39,7 @@ const Chat = () => {
 
 	const dispatch = useDispatch();
 
+	const chats = useSelector(selectchats);
 	const currentUser = useSelector(selectUser);
 	const activeUser = useSelector(selectActiveUser);
 	const accessToken = useSelector(selectAccessToken);
@@ -107,27 +114,24 @@ const Chat = () => {
 
 	useEffect(() => {
 		if (socketMessage) {
-			const { to } = socketMessage;
-			if (to === currentUser.id && activeUser) {
+			const { to, from } = socketMessage;
+			const fromUser = chats.find((c) => c._id === from);
+			if (to === currentUser.id && fromUser) {
 				dispatch(
 					chatActions.addMessageToUser({
-						email: activeUser,
+						email: fromUser.email,
 						message: socketMessage,
 					}),
 				);
+
+				if (activeUser === fromUser.email) {
+					audio.play();
+				}
 			}
 		}
-	}, [socketMessage, currentUser.id, activeUser]);
 
-	// useEffect(() => {
-	// 	if (!breakMode) {
-	// 		disconnectSocket();
-	// 	} else {
-	// 		connectSocket();
-	// 	}
-
-	// 	// eslint-disable-next-line react-hooks/exhaustive-deps
-	// }, [breakMode]);
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [socketMessage]);
 
 	useEffect(() => {
 		setTimerKey((prevKey) => prevKey + 2);
@@ -138,6 +142,12 @@ const Chat = () => {
 			setBreakMode(false);
 		}
 	}, [inBreak]);
+
+	useEffect(() => {
+		if (duration > -1 && duration < 4000) {
+			showNotification(inBreak);
+		}
+	}, [inBreak, duration]);
 
 	if (!accessToken) {
 		return <Redirect to='/signin' noThrow />;
@@ -179,7 +189,7 @@ const Chat = () => {
 					className='flex-1 w-8/12 h-full pl-3 pr-1'
 					style={{ minWidth: 520 }}
 				>
-					{breakMode ? <BreakRoom /> : <ChatRoom />}
+					{breakMode ? <BreakRoom /> : <ChatRoom audio={audio} />}
 				</div>
 				<div style={{ visibility: modalVisible }}>
 					<CountDownModal
@@ -194,6 +204,31 @@ const Chat = () => {
 				</div>
 			</div>
 		);
+	}
+};
+
+const showNotification = (breakMode) => {
+	const notify = () => {
+		if (breakMode) {
+			new Notification('Break Time!', {
+				body: "Hey there, it's your break period.",
+			});
+		} else {
+			new Notification('Break Over!', {
+				body: "Hey there, it's your work period.",
+			});
+		}
+		notificationAudio.play();
+	};
+
+	if (Notification.permission === 'granted') {
+		notify();
+	} else if (Notification.permission !== 'denied') {
+		Notification.requestPermission().then((permission) => {
+			if (permission === 'granted') {
+				notify();
+			}
+		});
 	}
 };
 

@@ -23,6 +23,7 @@ const BreakRoomList = ({ search = '' }) => {
 
 	/* eslint-disable no-undef */
 	const enterRoom = (room) => {
+		console.log('joinign room');
 		const { room: roomName } = room;
 
 		if (activeRoom === room) {

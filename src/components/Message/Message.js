@@ -17,7 +17,7 @@ const Message = ({ chat, text, to, from, timestamp, user = {} }) => {
 		if (chat) {
 			return fromUser.email === email;
 		} else {
-			return email === user.email;
+			return email === user.id;
 		}
 	};
 
