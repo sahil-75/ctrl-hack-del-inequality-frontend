@@ -43,7 +43,6 @@ export const chatSlice = createSlice({
 					[email]: {
 						...state.items[email],
 						messages: [...(messages || [])],
-						lastModified: +new Date(),
 					},
 				},
 			};
