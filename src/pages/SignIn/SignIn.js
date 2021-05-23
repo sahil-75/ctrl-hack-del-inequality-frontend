@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { navigate } from '@reach/router';
 import Loader from 'react-loader-spinner';
 import { useDispatch } from 'react-redux';
@@ -11,30 +11,11 @@ const SignIn = (props) => {
 	const [email, setEmail] = useInputForm('');
 	const [password, setPassword] = useInputForm('');
 	const dispatch = useDispatch();
-	const loading = false;
-
-	// useEffect(() => {
-	//   if (data) {
-	// const { name, email, accessToken } = data.login;
-
-	// localStorage.setItem('accessToken', accessToken);
-
-	// dispatch(
-	//   userActions.setUser({
-	//     name,
-	//     email,
-	//     accessToken,
-	//   })
-	// );
-
-	// navigate('app');
-	// }
-	// }, [data, dispatch]);
+	const [loading, setLoading] = useState(false);
 
 	const submitHandler = (event) => {
 		event.preventDefault();
-
-		// LOGIN LOGIC
+		setLoading(true);
 		login({ email, password })
 			.then((response) => {
 				if (response.status !== 200) alert('Invalid Credentials!');
@@ -49,7 +30,8 @@ const SignIn = (props) => {
 				);
 				navigate('/');
 			})
-			.catch(console.error);
+			.catch(console.error)
+			.finally(() => setLoading(false));
 	};
 
 	return (
@@ -112,14 +94,15 @@ const SignIn = (props) => {
 						{loading ? (
 							<span className='mr-3 w-5 h-5'>
 								<Loader
-									type='Bars'
+									type='Circles'
 									color='currentColor'
 									width='auto'
 									height='auto'
 								/>
 							</span>
-						) : null}
-						Submit
+						) : (
+							'Submit'
+						)}
 					</button>
 				</form>
 			</div>

@@ -64,9 +64,12 @@ export const login = (body) =>
 		headers: { 'Content-Type': 'application/json' },
 	});
 
-export const signup = (body) =>
+export const signup = (body, token) =>
 	fetch(`${URL}/user/signup`, {
 		method: 'POST',
 		body: JSON.stringify(body),
-		headers: { 'Content-Type': 'application/json' },
+		headers: {
+			Authorization: 'Bearer ' + token,
+			'Content-Type': 'application/json',
+		},
 	});

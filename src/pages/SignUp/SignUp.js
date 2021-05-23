@@ -20,8 +20,8 @@ const SignUp = (props) => {
 
 	const [email, setEmail] = useState('');
 	const [emailError, setEmailError] = useState('');
-
 	const [isSubmitted, setIsSubmitted] = useState(false);
+	const [loading, setLoading] = useState(false);
 
 	// const dispatch = useDispatch();
 	const { email: loggedInUser } = useSelector(selectUser);
@@ -30,7 +30,6 @@ const SignUp = (props) => {
 	const loggedInUserDomain = loggedInUser.substring(
 		loggedInUser.indexOf('@') + 1,
 	);
-	const loading = false;
 
 	const clearFormFields = () => {
 		setName('');
@@ -41,23 +40,34 @@ const SignUp = (props) => {
 	};
 
 	useEffect(() => {
-		if (email && name && password && role !== 'select_an_option' && isSubmitted) {
-			signup({
-				email,
-				name,
-				password,
-				role,
+		if (
+			email &&
+			name &&
+			password &&
+			role !== 'select_an_option' &&
+			isSubmitted
+		) {
+			setLoading(true);
+			signup(
+				{
+					email,
+					name,
+					password,
+					role,
+				},
 				accessToken,
-			})
+			)
+				.then((response) => response.json())
 				.then((response) => {
 					if (response.statusCode === 201) {
 						alert('User Added Successfully.');
+						clearFormFields();
 					} else {
-						alert('User could not be added');
+						throw new Error('User could not be added');
 					}
-					clearFormFields();
 				})
-				.catch(console.error);
+				.catch(console.error)
+				.finally(() => setLoading(false));
 		}
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [email, name, password, role, clearFormFields, isSubmitted]);
@@ -66,7 +76,9 @@ const SignUp = (props) => {
 		event.preventDefault();
 
 		if (alias.indexOf('@') !== -1)
-			setEmailError('Only enter the alias. Do not enter the full email id');
+			setEmailError(
+				'Only enter the alias. Do not enter the full email id',
+			);
 		else {
 			setEmailError('');
 			setEmail(`${alias}@${loggedInUserDomain}`);
@@ -181,27 +193,29 @@ const SignUp = (props) => {
 							role === 'select_an_option'
 						}
 						className={`mt-6 btn-primary flex items-center justify-center w-full font-medium uppercase tracking-wider
-						${loading
+						${
+							loading
 								? 'cursor-wait hover:bg-current bg-opacity-50'
 								: name === '' ||
-									alias === '' ||
-									password === '' ||
-									role === 'select_an_option'
-									? 'bg-opacity-50'
-									: ''
-							}`}
+								  alias === '' ||
+								  password === '' ||
+								  role === 'select_an_option'
+								? 'bg-opacity-50'
+								: ''
+						}`}
 					>
 						{loading ? (
 							<span className='mr-3 w-5 h-5'>
 								<Loader
-									type='Bars'
+									type='Circles'
 									color='currentColor'
 									width='auto'
 									height='auto'
 								/>
 							</span>
-						) : null}
-						Submit
+						) : (
+							'Submit'
+						)}
 					</button>
 				</form>
 			</div>
