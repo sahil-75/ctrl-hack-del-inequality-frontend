@@ -51,20 +51,6 @@ const SideBar = (props) => {
 				<button className='h-12 flex items-center text-xl my-3 p-4 text-gray-300'>
 					<FaCalendarAlt />
 				</button>
-				<button
-					className='h-12 flex items-center text-xl my-3 p-4 cursor-pointer'
-					onClick={() => {
-						const sure = window.confirm(
-							'Are you sure you want to logout?',
-						);
-						if (sure) {
-							dispatch(userActions.setAccessToken(''));
-							navigate('/signin');
-						}
-					}}
-				>
-					<FaSignOutAlt />
-				</button>
 				{user.role === 'admin' && (
 					<button
 						className='h-12 flex items-center text-xl my-3 cursor-pointer p-4'
@@ -101,6 +87,20 @@ const SideBar = (props) => {
 						timerKey={props.timerKey}
 						breakMode={props.breakMode}
 					/>
+				</button>
+				<button
+					className='h-12 flex items-center text-xl p-4 cursor-pointer'
+					onClick={() => {
+						const sure = window.confirm(
+							'Are you sure you want to logout?',
+						);
+						if (sure) {
+							dispatch(userActions.setAccessToken(''));
+							navigate('/signin');
+						}
+					}}
+				>
+					<FaSignOutAlt />
 				</button>
 			</div>
 		</div>
