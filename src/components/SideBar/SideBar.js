@@ -15,6 +15,7 @@ import {
 	FaUserClock,
 } from 'react-icons/fa';
 import { userActions } from '../../features/user/user.slice';
+import Avatar from '../Avatar/Avatar';
 
 const SideBar = (props) => {
 	const dispatch = useDispatch();
@@ -26,14 +27,14 @@ const SideBar = (props) => {
 			<div className='flex-col'>
 				<div className='my-3 px-2 mb-6 flex items-center justify-center'>
 					<div
-						className='rounded-full border-cyan-300 ring-2 ring-white cursor-pointer'
+						className='rounded-full cursor-pointer'
 						onClick={() => toggleProfileMenu(!isProfileMenuVisible)}
 					>
 						{user.image && (
 							<img alt='User' src={user.image} className='w-10' />
 						)}
-						<div className='p-2 relative'>
-							{!user.image && <FaUser size={20} />}
+						<div className='relative'>
+							{!user.image && <Avatar name={user.name} sm />}
 							<div
 								className='absolute shadow-md rounded-full'
 								style={{
@@ -94,6 +95,11 @@ const SideBar = (props) => {
 					visibility: isProfileMenuVisible ? 'visible' : 'hidden',
 				}}
 			>
+				<button
+					className='flex flex-row items-center p-2 text-xl cursor-pointer text-blue-500 hover:bg-gray-100'
+				>
+					<h4 className='text-gray-500 ml-3 text-base cursor-pointer'>{user.name}</h4>
+				</button>
 				{user.role === 'admin' && (
 					<button
 						className='flex flex-row items-center p-2 text-xl cursor-pointer text-blue-500 hover:bg-gray-100'
