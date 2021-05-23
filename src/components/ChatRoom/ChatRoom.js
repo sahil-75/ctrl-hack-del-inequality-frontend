@@ -17,7 +17,7 @@ import {
 	selectUser,
 } from '../../features/user/user.selector';
 import { chatActions } from '../../features/chats/chat.slice';
-import BreakRoomMessageList from '../BreakRoomMessageList/BreakRoomMessageList';
+import MessageList from '../MessageList/MessageList';
 
 const ChatRoom = () => {
 	const [message, setMessage] = useState('');
@@ -71,8 +71,6 @@ const ChatRoom = () => {
 		// }, 3000);
 	}, [activeUserEmail]);
 
-	console.log(messages);
-
 	return (
 		<div className='flex-grow flex-col space-between pt-4 flex h-full rounded'>
 			{activeUserEmail ? (
@@ -101,10 +99,7 @@ const ChatRoom = () => {
 						className='flex-grow w-full'
 						style={{ maxHeight: 'calc(100% - 124px)' }}
 					>
-						<BreakRoomMessageList
-							chat={true}
-							chatMessages={messages}
-						/>
+						<MessageList chat={true} chatMessages={messages} />
 					</div>
 
 					<div className='w-full flex justify-center items-end px-3 my-3'>

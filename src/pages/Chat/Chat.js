@@ -1,4 +1,3 @@
-/* eslint-disable no-undef */
 import { Redirect } from '@reach/router';
 import { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
@@ -15,13 +14,17 @@ import {
 	selectUser,
 	selectAccessToken,
 } from '../../features/user/user.selector';
+import { selectActiveUser } from '../../features/chats/chat.selector';
 import { roomActions } from '../../features/rooms/room.slice';
 import usePomodoro from '../../hooks/usePomodoro';
+import { chatActions } from '../../features/chats/chat.slice';
 
 const alert = require('../../assets/alert.wav');
 const audio = new Audio(alert.default);
 
 const Chat = () => {
+	const [socketMessage, setSocketMessage] = useState(null);
+
 	const [timerKey, setTimerKey] = useState(0);
 	const [searchKey, setSearchKey] = useState('');
 	const [breakMode, setBreakMode] = useState(false);
@@ -31,6 +34,7 @@ const Chat = () => {
 	const dispatch = useDispatch();
 
 	const currentUser = useSelector(selectUser);
+	const activeUser = useSelector(selectActiveUser);
 	const accessToken = useSelector(selectAccessToken);
 
 	const { inBreak, duration } = usePomodoro({
@@ -42,8 +46,6 @@ const Chat = () => {
 		},
 	});
 
-	console.log({ inBreak, duration });
-
 	const toggleBreakMode = () => {
 		// console.log('Break Started', timerKey + 1);
 		setTimerKey((prevKey) => prevKey + 2);
@@ -51,6 +53,7 @@ const Chat = () => {
 		setTimeUp(false);
 	};
 
+	/* eslint-disable no-undef */
 	const connectSocket = () => {
 		if (currentUser.name && currentUser.email) {
 			disconnectSocket();
@@ -77,6 +80,11 @@ const Chat = () => {
 				dispatch(roomActions.setAllRooms(rooms));
 			});
 
+			Rooms.addListener('chatMessage', (message) => {
+				console.log('in chat message', message);
+				setSocketMessage(() => ({ ...message }));
+			});
+
 			Rooms.addListener('issue', (issue) => {
 				console.log('in issue ', issue);
 			});
@@ -98,14 +106,28 @@ const Chat = () => {
 	}, [currentUser, currentUser.name, currentUser.email]);
 
 	useEffect(() => {
-		if (!breakMode) {
-			disconnectSocket();
-		} else {
-			connectSocket();
+		if (socketMessage) {
+			const { to } = socketMessage;
+			if (to === currentUser.id && activeUser) {
+				dispatch(
+					chatActions.addMessageToUser({
+						email: activeUser,
+						message: socketMessage,
+					}),
+				);
+			}
 		}
+	}, [socketMessage, currentUser.id, activeUser]);
 
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [breakMode]);
+	// useEffect(() => {
+	// 	if (!breakMode) {
+	// 		disconnectSocket();
+	// 	} else {
+	// 		connectSocket();
+	// 	}
+
+	// 	// eslint-disable-next-line react-hooks/exhaustive-deps
+	// }, [breakMode]);
 
 	useEffect(() => {
 		setTimerKey((prevKey) => prevKey + 2);

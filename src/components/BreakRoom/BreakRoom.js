@@ -6,7 +6,7 @@ import { FaHome, FaPaperPlane, FaPlus } from 'react-icons/fa';
 import { selectUser } from '../../features/user/user.selector';
 import { roomActions } from '../../features/rooms/room.slice';
 import { selectCurrentRoom } from '../../features/rooms/room.selector';
-import BreakRoomMessageList from '../BreakRoomMessageList/BreakRoomMessageList';
+import MessageList from '../MessageList/MessageList';
 
 let olderTimestamp;
 
@@ -76,7 +76,7 @@ const BreakRoom = () => {
 						className='flex-grow w-full'
 						style={{ maxHeight: 'calc(100% - 124px)' }}
 					>
-						<BreakRoomMessageList />
+						<MessageList />
 					</div>
 
 					<div className='w-full flex justify-center items-center my-4'>

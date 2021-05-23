@@ -1,9 +1,9 @@
 import { useLayoutEffect, useRef } from 'react';
 import { useSelector } from 'react-redux';
 import { selectRoomMessages } from '../../features/rooms/room.selector';
-import BreakRoomMessage from '../BreakRoomMessage/BreakRoomMessage';
+import Message from '../Message/Message';
 
-const BreakRoomMessageList = ({ chat = false, chatMessages = [] }) => {
+const MessageList = ({ chat = false, chatMessages = [] }) => {
 	const messagesRef = useRef(null);
 
 	const messages = useSelector(selectRoomMessages);
@@ -26,7 +26,7 @@ const BreakRoomMessageList = ({ chat = false, chatMessages = [] }) => {
 						{ text, content, to, from, timestamp, user } = {},
 						index,
 					) => (
-						<BreakRoomMessage
+						<Message
 							chat
 							key={index}
 							to={to}
@@ -42,4 +42,4 @@ const BreakRoomMessageList = ({ chat = false, chatMessages = [] }) => {
 	);
 };
 
-export default BreakRoomMessageList;
+export default MessageList;

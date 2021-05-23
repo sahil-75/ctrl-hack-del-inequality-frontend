@@ -1,3 +1,4 @@
+import cs from 'classnames';
 import { useEffect, useState } from 'react';
 import { CountdownCircleTimer } from 'react-countdown-circle-timer';
 import { FaRegHourglass } from 'react-icons/fa';
@@ -74,46 +75,62 @@ const CountDownTimer = (props) => {
 	// const remainingTime = endTime - startTime;
 
 	useEffect(() => setLocalKey((key) => key + 1), [duration]);
-	return (
-		<CountdownCircleTimer
-			isPlaying
-			key={props.timerKey + localKey}
-			strokeWidth={props.strokeWidth}
-			duration={duration}
-			colors={
-				props.sidebar
-					? [['#000000', 1]]
-					: props.breakMode
-					? [['#A30000', 1]]
-					: [['#004777', 1]]
-			}
-			onComplete={() => {
-				if (!props.sidebar && props.setTimeUp && duration > -1) {
-					if (Notification.permission === 'granted') {
-						showNotification();
-					} else if (Notification.permission !== 'denied') {
-						Notification.requestPermission().then((permission) => {
-							if (permission === 'granted') {
-								showNotification();
-							}
-						});
-					}
-					console.log(props);
-					props.setTimeUp(true);
+
+	if (Math.abs(duration ?? 0) > 4000) {
+		return (
+			<div
+				className={cs('text-center', {
+					'text-lg font-medium': !props.sidebar,
+					'w-12 text-sm': props.sidebar,
+				})}
+			>
+				Work Hours Over
+			</div>
+		);
+	} else {
+		return (
+			<CountdownCircleTimer
+				isPlaying
+				key={props.timerKey + localKey}
+				strokeWidth={props.strokeWidth}
+				duration={duration}
+				colors={
+					props.sidebar
+						? [['#000000', 1]]
+						: props.breakMode
+						? [['#A30000', 1]]
+						: [['#004777', 1]]
 				}
-			}}
-			size={props.sidebar ? 50 : 200}
-		>
-			{({ elapsedTime }) =>
-				renderTime(
-					duration,
-					elapsedTime,
-					props.sidebar,
-					props.breakMode,
-				)
-			}
-		</CountdownCircleTimer>
-	);
+				onComplete={() => {
+					if (!props.sidebar && props.setTimeUp && duration > -1) {
+						if (Notification.permission === 'granted') {
+							showNotification();
+						} else if (Notification.permission !== 'denied') {
+							Notification.requestPermission().then(
+								(permission) => {
+									if (permission === 'granted') {
+										showNotification();
+									}
+								},
+							);
+						}
+						console.log(props);
+						props.setTimeUp(true);
+					}
+				}}
+				size={props.sidebar ? 50 : 200}
+			>
+				{({ elapsedTime }) =>
+					renderTime(
+						duration,
+						elapsedTime,
+						props.sidebar,
+						props.breakMode,
+					)
+				}
+			</CountdownCircleTimer>
+		);
+	}
 };
 
 export default CountDownTimer;

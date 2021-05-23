@@ -7,7 +7,7 @@ import {
 import { selectUser } from '../../features/user/user.selector';
 import Avatar from '../Avatar/Avatar';
 
-const BreakRoomMessage = ({ chat, text, to, from, timestamp, user = {} }) => {
+const Message = ({ chat, text, to, from, timestamp, user = {} }) => {
 	const { email } = useSelector(selectUser);
 
 	const toUser = useSelector(selectAUserById(to)) ?? {};
@@ -80,4 +80,4 @@ const BreakRoomMessage = ({ chat, text, to, from, timestamp, user = {} }) => {
 	);
 };
 
-export default BreakRoomMessage;
+export default Message;
