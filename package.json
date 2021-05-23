@@ -12,7 +12,9 @@
 		"@testing-library/react": "^9.3.2",
 		"@testing-library/user-event": "^7.1.2",
 		"classnames": "^2.3.1",
+		"cors": "^2.8.5",
 		"date-fns": "^2.21.3",
+		"express": "^4.17.1",
 		"react": "^17.0.2",
 		"react-countdown-circle-timer": "^2.5.3",
 		"react-dom": "^17.0.2",
@@ -25,7 +27,8 @@
 		"start": "craco start",
 		"build": "craco build",
 		"test": "craco test",
-		"eject": "react-scripts eject"
+		"eject": "react-scripts eject",
+		"heroku-postbuild": "craco build"
 	},
 	"eslintConfig": {
 		"extends": "react-app"
