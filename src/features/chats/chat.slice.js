@@ -19,7 +19,7 @@ export const chatSlice = createSlice({
 		},
 
 		addMessageToUser(state, action) {
-			const { email, message } = action.payload;
+			const { email, message, lastModified } = action.payload;
 			const userMessages = state.items[email]?.messages ?? [];
 			return {
 				...state,
@@ -28,6 +28,7 @@ export const chatSlice = createSlice({
 					[email]: {
 						...state.items[email],
 						messages: [...userMessages, message],
+						lastModified,
 					},
 				},
 			};
@@ -41,7 +42,7 @@ export const chatSlice = createSlice({
 					...state.items,
 					[email]: {
 						...state.items[email],
-						messages: [...messages],
+						messages: [...(messages || [])],
 					},
 				},
 			};

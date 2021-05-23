@@ -21,6 +21,7 @@ import {
 import usePomodoro from '../../hooks/usePomodoro';
 import { roomActions } from '../../features/rooms/room.slice';
 import { chatActions } from '../../features/chats/chat.slice';
+import { setBreakModeOnBE } from '../../services/api';
 
 const alert = require('../../assets/alert.wav');
 const audio = new Audio(alert.default);
@@ -153,6 +154,10 @@ const Chat = () => {
 			showNotification(inBreak);
 		}
 	}, [inBreak, duration]);
+
+	useEffect(() => {
+		setBreakModeOnBE(inBreak, accessToken);
+	}, [inBreak]); // eslint-disable-line
 
 	if (!accessToken) {
 		return <Redirect to='/signin' noThrow />;

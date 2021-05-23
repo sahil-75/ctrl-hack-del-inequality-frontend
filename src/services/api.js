@@ -39,22 +39,15 @@ export const getMessages = async (token, userId) => {
 };
 
 export const sendMessage = async (token, message) => {
-	try {
-		const result = await fetch(`${URL}/chat`, {
-			method: 'POST',
-			headers: {
-				Authorization: 'Bearer ' + token,
-				'Content-Type': 'application/json',
-			},
+	return fetch(`${URL}/chat`, {
+		method: 'POST',
+		headers: {
+			Authorization: 'Bearer ' + token,
+			'Content-Type': 'application/json',
+		},
 
-			body: JSON.stringify(message),
-		});
-
-		return await result.json();
-	} catch (error) {
-		console.error(error);
-		return [];
-	}
+		body: JSON.stringify(message),
+	}).then((res) => res.json());
 };
 
 export const login = (body) =>
@@ -73,3 +66,25 @@ export const signup = (body, token) =>
 			'Content-Type': 'application/json',
 		},
 	});
+
+export const setDelegatee = (body, token) =>
+	fetch(`${URL}/user`, {
+		method: 'PUT',
+		body: JSON.stringify(body),
+		headers: {
+			Authorization: 'Bearer ' + token,
+			'Content-Type': 'application/json',
+		},
+	});
+export const setBreakModeOnBE = (breakMode, token) => {
+	fetch(`${URL}/user`, {
+		method: 'PUT',
+		body: JSON.stringify({
+			isInBreakMode: breakMode,
+		}),
+		headers: {
+			Authorization: 'Bearer ' + token,
+			'Content-Type': 'application/json',
+		},
+	});
+};
