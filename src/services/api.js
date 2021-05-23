@@ -73,3 +73,13 @@ export const signup = (body, token) =>
 			'Content-Type': 'application/json',
 		},
 	});
+
+export const setDelegatee = (body, token) =>
+	fetch(`${URL}/user`, {
+		method: 'PUT',
+		body: JSON.stringify(body),
+		headers: {
+			Authorization: 'Bearer ' + token,
+			'Content-Type': 'application/json',
+		},
+	});
