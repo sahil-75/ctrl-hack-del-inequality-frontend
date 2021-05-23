@@ -12,10 +12,19 @@ import { getUsers } from '../../services/api';
 import ChatUser from '../ChatUser/ChatUser';
 import Loader from '../Loader/Loader';
 
+const comparator = (c1, c2) => {
+	return (
+		new Date(c2.lastModified || -1).valueOf() -
+		new Date(c1.lastModified || -1).valueOf()
+	);
+};
+
 const ChatList = () => {
 	const [loading, setLoading] = useState(true);
 
 	const chats = useSelector(selectchats);
+	const sortedChats = chats.sort(comparator);
+
 	const activeUserEmail = useSelector(selectActiveUser);
 	const accessToken = useSelector(selectAccessToken);
 	// const { email } = useSelector(selectUser);
@@ -44,7 +53,7 @@ const ChatList = () => {
 				<div className='overflow-y-auto overflow-x-hidden scrollbar-fit rounded mb-4'>
 					{chats?.length ? (
 						<ul className='px-2'>
-							{chats.map((chat, index) => (
+							{sortedChats.map((chat, index) => (
 								<ChatUser
 									{...chat}
 									key={chat.email}

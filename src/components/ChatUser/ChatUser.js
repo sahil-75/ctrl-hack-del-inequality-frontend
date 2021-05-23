@@ -1,8 +1,5 @@
 import React from 'react';
 import Avatar from '../Avatar/Avatar';
-// import { useDispatch, useSelector } from 'react-redux';
-// import { selectActiveUser } from '../../features/chats/chat.selector';
-// import { chatActions, ChatState } from '../../features/chats/chat.slice';
 
 const ChatUser = ({
 	name,
