@@ -89,13 +89,7 @@ const SignUp = (props) => {
 	return (
 		<div className='bg-primary bg-blue-500 text-gray-500 px-12 py-3'>
 			<div className='bg-white w-10/12 sm:w-8/12 md:w-6/12 lg:w-4/12 shadow-xl rounded-xl px-1 py-4 overflow-y-hidden max-h-full'>
-				<img
-					src={`${process.env.PUBLIC_URL}/logo512.png`}
-					alt='Voice Logo'
-					title='Voice Logo'
-					className='w-20 mx-auto mb-1'
-				/>
-				<h3 className='text-2xl text-gray-700 mb-6 mx-3 text-center'>
+				<h3 className='text-2xl text-gray-700 mt-2 mb-6 mx-3 text-center'>
 					Add New Employee
 				</h3>
 				<form onSubmit={submitHandler} className='px-5 mb-4'>
@@ -193,16 +187,15 @@ const SignUp = (props) => {
 							role === 'select_an_option'
 						}
 						className={`mt-6 btn-primary flex items-center justify-center w-full font-medium uppercase tracking-wider
-						${
-							loading
+							${loading
 								? 'cursor-wait hover:bg-current bg-opacity-50'
 								: name === '' ||
-								  alias === '' ||
-								  password === '' ||
-								  role === 'select_an_option'
-								? 'bg-opacity-50'
-								: ''
-						}`}
+									alias === '' ||
+									password === '' ||
+									role === 'select_an_option'
+									? 'bg-opacity-50'
+									: ''
+							}`}
 					>
 						{loading ? (
 							<span className='mr-3 w-5 h-5'>

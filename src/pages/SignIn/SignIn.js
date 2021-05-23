@@ -42,13 +42,7 @@ const SignIn = (props) => {
 			}}
 		>
 			<div className='bg-white w-10/12 sm:w-8/12 md:w-6/12 lg:w-4/12 shadow-xl rounded-xl py-4 overflow-y-auto max-h-full'>
-				<img
-					src={`${process.env.PUBLIC_URL}/logo512.png`}
-					alt='Voice Logo'
-					title='Voice Logo'
-					className='w-20 mx-auto mb-1'
-				/>
-				<h3 className='text-2xl text-gray-700 mb-8 text-center'>
+				<h3 className='text-2xl text-gray-700 mt-2 mb-8 text-center'>
 					Sign in to your account
 				</h3>
 				<form onSubmit={submitHandler} className='px-6 mb-4'>
@@ -85,11 +79,11 @@ const SignIn = (props) => {
 					<button
 						type='submit'
 						disabled={loading}
-						className={`btn-primary flex items-center justify-center w-full font-semibold uppercase tracking-wider ${
-							loading
+						className={`btn-primary flex items-center justify-center w-full font-semibold uppercase tracking-wider
+							${loading
 								? 'cursor-wait hover:bg-current bg-opacity-50 '
 								: ''
-						}`}
+							}`}
 					>
 						{loading ? (
 							<span className='mr-3 w-5 h-5'>
