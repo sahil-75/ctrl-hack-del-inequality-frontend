@@ -12,9 +12,9 @@ We have 3 users setup for you from 3 different domains.
 - Password for all these is `varAdmin`
 
 # Locally
-Start the server locally then
+Start the server locally then (Follow this https://github.com/sahil-75/ctrl-hack-del-inequality-backend#readme)
 
-```
+```bash
 # install dependecies
 yarn
 
