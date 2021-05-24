@@ -1,5 +1,4 @@
 import { navigate } from '@reach/router';
-import eachMinuteOfInterval from 'date-fns/eachMinuteOfInterval/index';
 import React, { useCallback } from 'react';
 import { useSelector } from 'react-redux';
 import { selectEmails } from '../../features/chats/chat.selector';

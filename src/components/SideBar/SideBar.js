@@ -7,7 +7,6 @@ import {
 	FaInbox,
 	FaPhoneAlt,
 	FaCalendarAlt,
-	FaUser,
 	FaUserPlus,
 	FaGamepad,
 	FaSignOutAlt,
@@ -52,15 +51,15 @@ const SideBar = (props) => {
 				<button className='h-12 flex items-center text-xl my-3 cursor-pointer p-4 bg-white bg-opacity-20 border-r-4 border-white'>
 					<FaInbox />
 				</button>
-				<button className='h-12 flex items-center text-xl my-3 p-4 text-gray-300'>
+				<button className='h-12 flex items-center text-xl cursor-default my-3 p-4 text-gray-300'>
 					<FaPhoneAlt />
 				</button>
-				<button className='h-12 flex items-center text-xl my-3 p-4 text-gray-300'>
+				<button className='h-12 flex items-center text-xl cursor-default my-3 p-4 text-gray-300'>
 					<FaCalendarAlt />
 				</button>
 			</div>
 			<div className='flex-col flex items-center'>
-				{true && (
+				{props.inBreak && (
 					<button
 						className='h-12 flex items-center text-xl my-4 cursor-pointer p-2'
 						onClick={() =>
@@ -95,10 +94,10 @@ const SideBar = (props) => {
 					visibility: isProfileMenuVisible ? 'visible' : 'hidden',
 				}}
 			>
-				<button
-					className='flex flex-row items-center p-2 text-xl cursor-pointer text-blue-500 hover:bg-gray-100'
-				>
-					<h4 className='text-gray-500 ml-3 text-base cursor-pointer'>{user.name}</h4>
+				<button className='flex flex-row items-center p-2 text-xl cursor-pointer text-blue-500 hover:bg-gray-100'>
+					<h4 className='text-gray-500 ml-3 text-base cursor-pointer'>
+						{user.name}
+					</h4>
 				</button>
 				{user.role === 'admin' && (
 					<button

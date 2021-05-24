@@ -4,7 +4,8 @@ export const selectchats = (state) => [
 	),
 ];
 
-export const selectEmails = (state) => Object.keys(state.chat.items);
+export const selectEmails = (state) =>
+	Object.keys(state.chat.items).filter((c) => c !== state.user.email);
 
 export const selectUserMessage = (email) => (state) => state.chat.items[email];
 

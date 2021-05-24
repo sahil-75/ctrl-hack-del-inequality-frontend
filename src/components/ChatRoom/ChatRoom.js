@@ -164,7 +164,7 @@ const ChatRoom = ({ audio }) => {
 							</div>
 						) : null}
 
-						<div className='w-full flex justify-center flex-none items-end px-3 my-3'>
+						<div className='w-full flex justify-center items-center my-4'>
 							<input
 								type='text'
 								value={message}
@@ -177,7 +177,7 @@ const ChatRoom = ({ audio }) => {
 							/>
 							<button
 								onClick={sendText}
-								className='bg-blue-500 hover:bg-cyan-700 h-10 w-10 flex items-center justify-center focus:outline-none text-gray-200 rounded-full'
+								className='bg-blue-500 hover:bg-cyan-700 h-12 w-12 flex items-center justify-center focus:outline-none text-gray-200 rounded-full'
 							>
 								<FaPaperPlane />
 							</button>

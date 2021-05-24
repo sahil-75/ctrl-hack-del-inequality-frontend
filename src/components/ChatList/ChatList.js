@@ -66,7 +66,7 @@ const ChatList = () => {
 						<div className='h-full w-full text-cyan-500 flex items-center justify-center'></div>
 					)}
 				</div>
-				<button className='absolute bottom-10 right-7 text-xl p-4 rounded-full text-white bg-blue-500 cursor-pointer filter drop-shadow-xl shadow-xl'>
+				<button className='absolute bottom-4 flex items-center justify-center right-4 h-12 w-12 text-xl rounded-full text-white bg-blue-500 cursor-pointer filter drop-shadow-xl shadow-xl'>
 					<FaPlus />
 				</button>
 			</>

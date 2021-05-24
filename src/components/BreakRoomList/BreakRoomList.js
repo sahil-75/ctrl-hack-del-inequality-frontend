@@ -108,8 +108,8 @@ const BreakRoomList = ({ search = '' }) => {
 				</div>
 				<button
 					className={cs(
-						'absolute hover:bg-blue-700 bottom-10 right-7 h-12 w-12 text-xl rounded-full',
-						'bg-blue-500 cursor-pointer shadow-lg flex items-center justify-center text-white',
+						'absolute hover:bg-blue-700 bottom-4 right-4 h-12 w-12 text-xl rounded-full',
+						'bg-blue-500 cursor-pointer filter drop-shadow-xl shadow-xl flex items-center justify-center text-white',
 					)}
 					onClick={() => setShowForm((state) => !state)}
 				>
