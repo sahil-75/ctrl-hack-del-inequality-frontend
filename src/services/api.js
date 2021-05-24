@@ -1,7 +1,6 @@
 const PROD_URL = 'https://ctrl-hack-del-inequality-be.herokuapp.com';
 
-const URL =
-	process.env.NODE_ENV !== 'production' ? 'http://localhost:4000' : PROD_URL;
+const URL = PROD_URL;
 
 export const getUsers = async (token) => {
 	try {
