@@ -50,7 +50,7 @@ const ChatList = () => {
 	} else {
 		return (
 			<>
-				<div className='overflow-y-auto overflow-x-hidden scrollbar-fit rounded mb-4'>
+				<div className='overflow-y-auto overflow-x-hidden scrollbar-fit rounded mb-4 pb-6'>
 					{chats?.length ? (
 						<ul className='px-2'>
 							{sortedChats.map((chat, index) => (
