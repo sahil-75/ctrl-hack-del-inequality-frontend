@@ -13,6 +13,8 @@ import CountDownModal from '../../components/CountDownModal/CountDownModal';
 import {
 	selectUser,
 	selectAccessToken,
+	selectPomodoroConfig,
+	selectStartHour,
 } from '../../features/user/user.selector';
 import {
 	selectchats,
@@ -45,14 +47,13 @@ const Chat = () => {
 	const currentUser = useSelector(selectUser);
 	const activeUser = useSelector(selectActiveUser);
 	const accessToken = useSelector(selectAccessToken);
+	const pomodoroTime = useSelector(selectPomodoroConfig);
+
+	const startHours = useSelector(selectStartHour) ?? 10;
 
 	const { inBreak, duration } = usePomodoro({
-		time: {
-			workTime: 900,
-			breakTime: 900,
-			lunchTime: 3600,
-			pomodoroTime: 900,
-		},
+		time: pomodoroTime,
+		hour: startHours,
 	});
 
 	const toggleBreakMode = () => {

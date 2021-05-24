@@ -18,7 +18,7 @@ const ChatUser = ({
 		>
 			{isActive && (
 				<div
-					className='absolute bg-blue-500 h-6 w-6 rounded-full -right-3 top-5'
+					className='absolute bg-blue-500 h-6 w-6 rounded-full -right-3 top-6'
 					style={{
 						clipPath: 'polygon(0 0, 50% 0, 50% 100%, 0% 100%)',
 					}}
@@ -40,6 +40,11 @@ const ChatUser = ({
 					className={`text-base font-sans w-full text-left font-medium text-gray-600`}
 				>
 					{name}
+				</div>
+				<div
+					className={`text-sm font-sans w-full text-left text-gray-400`}
+				>
+					{email}
 				</div>
 				{lastMessage && (
 					<div

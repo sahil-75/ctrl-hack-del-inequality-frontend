@@ -1,10 +1,10 @@
 import { add, set, compareAsc } from 'date-fns';
 import { useEffect, useMemo, useState } from 'react';
 
-const WORK_TIME_SECONDS = 120;
-const BREAK_TIME_SECONDS = 60;
-const LUNCH_TIME_SECONDS = 60;
-const POMODORO_TIME_SECONDS = 60;
+const WORK_TIME_SECONDS = 1500;
+const BREAK_TIME_SECONDS = 300;
+const LUNCH_TIME_SECONDS = 3600;
+const POMODORO_TIME_SECONDS = 900;
 
 const w = 'work';
 const b = 'break';
@@ -19,6 +19,7 @@ const usePomodoro = (options = {}) => {
 			lunchTime = LUNCH_TIME_SECONDS,
 			pomodoroTime = POMODORO_TIME_SECONDS,
 		} = {},
+		hour = 10,
 	} = options;
 
 	const [inBreak, setInBreak] = useState(false);
@@ -26,8 +27,14 @@ const usePomodoro = (options = {}) => {
 
 	const pomodoroArray = useMemo(
 		() =>
-			getPomodoroArray({ workTime, breakTime, lunchTime, pomodoroTime }),
-		[workTime, breakTime, lunchTime, pomodoroTime],
+			getPomodoroArray({
+				pomodoroTime,
+				workTime,
+				breakTime,
+				lunchTime,
+				hour,
+			}),
+		[workTime, breakTime, lunchTime, pomodoroTime, hour],
 	);
 
 	const pomodoroObject = useMemo(
@@ -96,10 +103,16 @@ const isCurrentInRange = (start, end) => {
 	return nowStartDiff >= 0 && nowEndDiff < 0;
 };
 
-const getPomodoroArray = ({ workTime, breakTime, lunchTime, pomodoroTime }) => {
+const getPomodoroArray = ({
+	workTime,
+	breakTime,
+	lunchTime,
+	pomodoroTime,
+	hour = 10,
+}) => {
 	const pomodoroArray = [];
 	let currentDate = set(new Date(), {
-		hours: 10,
+		hours: hour,
 		minutes: 0,
 		seconds: 0,
 	});

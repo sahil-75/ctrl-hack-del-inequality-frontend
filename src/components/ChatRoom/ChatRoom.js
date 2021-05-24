@@ -150,7 +150,7 @@ const ChatRoom = ({ audio }) => {
 											sendText({ isUrgent: true })
 										}
 									>
-										Send As Urgent
+										NOTIFY AS URGENT
 									</button>
 									<button
 										className='btn-primary m-0 ml-4 uppercase tracking-wider'
@@ -158,7 +158,7 @@ const ChatRoom = ({ audio }) => {
 											sendText({ toDelegatee: true })
 										}
 									>
-										Delegate
+										FORWARD TO THE DELEGATEE
 									</button>
 								</div>
 							</div>

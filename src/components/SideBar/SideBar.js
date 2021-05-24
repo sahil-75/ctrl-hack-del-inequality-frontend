@@ -9,6 +9,7 @@ import {
 	FaCalendarAlt,
 	FaUserPlus,
 	FaGamepad,
+	FaClock,
 	FaSignOutAlt,
 	FaBriefcase,
 	FaUserClock,
@@ -120,6 +121,17 @@ const SideBar = (props) => {
 					<FaUserClock size={24} />
 					<h4 className='text-gray-500 ml-3 text-base cursor-pointer'>
 						Set Delegatee
+					</h4>
+				</button>
+				<button
+					className='flex flex-row items-center p-2 px-4 text-xl cursor-pointer text-blue-500 hover:bg-gray-100'
+					onClick={() => {
+						navigate('/pomodoro');
+					}}
+				>
+					<FaClock size={20} />
+					<h4 className='text-gray-500 ml-4 text-base cursor-pointer'>
+						Set Pomodoro timeline
 					</h4>
 				</button>
 				<button
