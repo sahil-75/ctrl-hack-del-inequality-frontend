@@ -88,20 +88,21 @@ const SideBar = (props) => {
 				</button>
 			</div>
 			<div
-				className='absolute left-6 p-2 text-xl rounded-xl top-20 mt-1
-				bg-white shadow-lg flex flex-col z-50'
+				className='absolute left-6 text-xl rounded-xl top-20 mt-1
+				bg-white shadow-lg flex flex-col z-50 overflow-hidden'
 				style={{
 					visibility: isProfileMenuVisible ? 'visible' : 'hidden',
 				}}
 			>
-				<button className='flex flex-row items-center p-2 text-xl cursor-pointer text-blue-500 hover:bg-gray-100'>
-					<h4 className='text-gray-500 ml-3 text-base cursor-pointer'>
+				<button className='flex flex-col items-start p-2 px-0 pb-90 text-xl cursor-pointer text-blue-500 hover:bg-gray-100'>
+					<h4 className='text-gray-500 m-0 text-md ml-3 text-base cursor-pointer'>
 						{user.name}
 					</h4>
+					<p className='text-gray-400 text-sm px-3'>{user.email}</p>
 				</button>
 				{user.role === 'admin' && (
 					<button
-						className='flex flex-row items-center p-2 text-xl cursor-pointer text-blue-500 hover:bg-gray-100'
+						className='flex flex-row items-center p-2 px-4 text-xl cursor-pointer text-blue-500 hover:bg-gray-100'
 						onClick={() => navigate('/signup')}
 					>
 						<FaUserPlus size={24} />
@@ -111,7 +112,7 @@ const SideBar = (props) => {
 					</button>
 				)}
 				<button
-					className='flex flex-row items-center p-2 text-xl cursor-pointer text-blue-500 hover:bg-gray-100'
+					className='flex flex-row items-center p-2 px-4 text-xl cursor-pointer text-blue-500 hover:bg-gray-100'
 					onClick={() => {
 						navigate('/delegatee');
 					}}
@@ -122,7 +123,7 @@ const SideBar = (props) => {
 					</h4>
 				</button>
 				<button
-					className='flex flex-row items-center p-2 text-xl cursor-pointer text-blue-500 hover:bg-gray-100'
+					className='flex flex-row items-center p-2 px-4 text-xl cursor-pointer text-blue-500 hover:bg-gray-100'
 					onClick={() => {
 						const sure = window.confirm(
 							'Are you sure you want to logout?',
