@@ -1,3 +1,4 @@
+import { navigate } from '@reach/router';
 const PROD_URL = 'https://ctrl-hack-del-inequality-be.herokuapp.com';
 
 const URL = PROD_URL;
@@ -11,6 +12,11 @@ export const getUsers = async (token) => {
 				'Content-Type': 'application/json',
 			},
 		});
+
+		if (!handleError(result)) {
+			navigate('/signin');
+			throw new Error('Api error occurred');
+		}
 
 		const body = await result.json();
 		return await body.users;
@@ -29,6 +35,11 @@ export const getMessages = async (token, userId) => {
 				'Content-Type': 'application/json',
 			},
 		});
+
+		if (!handleError(result)) {
+			navigate('/signin');
+			throw new Error('Api error occurred');
+		}
 
 		return await result.json();
 	} catch (error) {
@@ -75,6 +86,7 @@ export const setDelegatee = (body, token) =>
 			'Content-Type': 'application/json',
 		},
 	});
+
 export const setBreakModeOnBE = (breakMode, token) => {
 	fetch(`${URL}/user`, {
 		method: 'PUT',
@@ -86,4 +98,12 @@ export const setBreakModeOnBE = (breakMode, token) => {
 			'Content-Type': 'application/json',
 		},
 	});
+};
+
+const handleError = (response) => {
+	if (response.status === 403) {
+		return false;
+	}
+
+	return true;
 };
