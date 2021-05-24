@@ -10,6 +10,7 @@ import {
 	FaUserPlus,
 	FaGamepad,
 	FaClock,
+	FaInfoCircle,
 	FaSignOutAlt,
 	FaBriefcase,
 	FaUserClock,
@@ -149,6 +150,17 @@ const SideBar = (props) => {
 					<FaSignOutAlt size={24} />
 					<h4 className='text-gray-500 ml-3 text-base cursor-pointer'>
 						Log Out
+					</h4>
+				</button>
+				<button
+					className='flex flex-row items-center p-2 px-4 text-xl cursor-pointer text-blue-500 hover:bg-gray-100'
+					onClick={() => {
+						navigate('/info');
+					}}
+				>
+					<FaInfoCircle size={20} />
+					<h4 className='text-gray-500 ml-4 text-base cursor-pointer'>
+						Info
 					</h4>
 				</button>
 			</div>
