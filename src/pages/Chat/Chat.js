@@ -222,11 +222,13 @@ const showNotification = (breakMode) => {
 	const notify = () => {
 		if (breakMode) {
 			new Notification('Break Time!', {
-				body: "Hey there, it's your break period.",
+				body: 'Hey there, its your break period.',
+				icon: 'https://raw.githubusercontent.com/sahil-75/random-assets/master/logo.png'
 			});
 		} else {
 			new Notification('Break Over!', {
-				body: "Hey there, it's your work period.",
+				body: 'Hey there, its your work period.',
+				icon: 'https://raw.githubusercontent.com/sahil-75/random-assets/master/logo.png'
 			});
 		}
 		notificationAudio.play();
