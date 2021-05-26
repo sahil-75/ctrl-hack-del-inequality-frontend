@@ -76,12 +76,13 @@ const BreakRoomList = ({ search = '' }) => {
 					<div className='h-full w-full text-blue-500 flex items-center justify-center text-xl pb-6'>
 						<div className='flex flex-col items-center'>
 							<FaExclamationTriangle size={80} />
+							<div className='pt-2 text-lg'>No rooms found</div>
 						</div>
 					</div>
 				)}
 				<div
 					className={cs(
-						'absolute bottom-4 p-4 text-xl rounded-xl bottom-20',
+						'absolute p-4 text-xl rounded-xl bottom-20',
 						'bg-white shadow-lg flex flex-col items-end justify-end right-2',
 						{ visible: showForm, invisible: !showForm },
 					)}
